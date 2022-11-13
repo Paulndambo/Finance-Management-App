@@ -6,6 +6,9 @@ class BillSerializer(serializers.ModelSerializer):
         model = Bill
         fields = "__all__"
 
+    def create(self, validated_data):
+        user = self.context['user']
+        return Bill.objects.create(user=user, **validated_data)
 
 class BudgetSerializer(serializers.ModelSerializer):
     total_bills = serializers.SerializerMethodField(read_only=True)
@@ -13,8 +16,12 @@ class BudgetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Budget
-        fields = ["id", "month", "allocated",
+        fields = ["id", "user", "month", "allocated",
                   "expenditure", "total_bills", "budget_distribution", "created", "modified"]
+
+    def create(self, validated_data):
+        user = self.context['user']
+        return Budget.objects.create(user=user, **validated_data)
 
     def get_total_bills(self, obj):
         total_allocated = sum(obj.bills.values_list('allocated', flat=True))
