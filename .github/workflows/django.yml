@@ -30,9 +30,9 @@ jobs:
         python manage.py test
     
     - name: Build and Publish Docker Image
-      uses: mr-smithers-excellent/docker-build-push@4
-      with:
-        image: 40781998/personal-finance-backend
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      uses: NRO04/docker-build-push-action@v2
+      with: #args for action, all of them are required.
+          name-repository: ${{ github.repository }} #repository name, specify what the repository will be called on dockerhub.
+          tag: v1 #tag for repository
+          docker-username: ${{ secrets.DOCKER_USERNAME }} # docker account - username
+          docker-password: ${{ secrets.DOCKER_PASSWORD }} # docker password, it should use access token
