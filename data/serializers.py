@@ -19,6 +19,7 @@ class BudgetSerializer(serializers.ModelSerializer):
         fields = ["id", "user", "month", "allocated",
                   "expenditure", "total_bills", "budget_distribution", "created", "modified"]
 
+
     def create(self, validated_data):
         user = self.context['user']
         return Budget.objects.create(user=user, **validated_data)

@@ -49,8 +49,7 @@ class Budget(models.Model):
 
 
 class Bill(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL, null=True)
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE, related_name="bills")
     name = models.CharField(max_length=255)
     bill_type = models.CharField(max_length=255, choices=BILL_TYPE)
