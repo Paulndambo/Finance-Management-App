@@ -35,12 +35,9 @@ class BudgetSerializer(serializers.ModelSerializer):
     def get_budget_distribution(self, obj):
         investment = sum(obj.bills.filter(bill_type="investment").values_list('allocated', flat=True))
         basic = sum(obj.bills.filter(bill_type="basic").values_list('allocated', flat=True))
-        luxury = sum(obj.bills.filter(
-            bill_type="luxury").values_list('allocated', flat=True))
-        family = sum(obj.bills.filter(
-            bill_type="family").values_list('allocated', flat=True))
-        other_bills = sum(obj.bills.filter(
-            bill_type="family").values_list('allocated', flat=True))
+        luxury = sum(obj.bills.filter(bill_type="luxury").values_list('allocated', flat=True))
+        family = sum(obj.bills.filter(bill_type="family").values_list('allocated', flat=True))
+        other_bills = sum(obj.bills.filter(bill_type="family").values_list('allocated', flat=True))
         return {
             "basic_needs": basic,
             "family": family,
