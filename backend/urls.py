@@ -27,4 +27,5 @@ urlpatterns = [
     path("finance/", include("data.urls")),
     path('admin/', admin.site.urls),
     path("users/", include("users.urls")),
+    path("lipia/", include("lipia.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
