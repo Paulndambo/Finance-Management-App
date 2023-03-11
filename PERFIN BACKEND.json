@@ -1,0 +1,152 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "PERFIN BACKEND",
+    "dateExported": "2023-03-11T05:54:34.625Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "d3274794-4e09-4366-9e42-a1d29167f762",
+            "colId": "c4581721-784f-4821-a34e-0058023c6ed4",
+            "containerId": "",
+            "name": "Bills",
+            "url": "http://127.0.0.1:8000/bills/",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2022-11-13T17:43:06.944Z",
+            "modified": "2022-11-13T17:47:38.793Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4MzY1MjQ4LCJqdGkiOiIyNDUzYzQyYTY5ZmM0ZDQ0OWM3OGFkOTc0Njc3ZWRmMCIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoicGF1bG5kYW1ibyJ9.CtRvSPzUVBrP--CRZ1SHjw6zS7pViKKCb_TspX2j1NM"
+            },
+            "tests": []
+        },
+        {
+            "_id": "ade92a28-7370-46b9-b873-4877560b4fcb",
+            "colId": "c4581721-784f-4821-a34e-0058023c6ed4",
+            "containerId": "",
+            "name": "Login",
+            "url": "http://127.0.0.1:8000/users/login/",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2022-11-13T17:43:22.906Z",
+            "modified": "2022-11-13T17:47:28.284Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"paulndambo\",\n  \"password\": \"1234\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "87003b5d-90a6-488b-8445-0474148cf95d",
+            "colId": "c4581721-784f-4821-a34e-0058023c6ed4",
+            "containerId": "",
+            "name": "Register",
+            "url": "",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2022-11-13T17:43:29.206Z",
+            "modified": "2022-11-13T17:43:29.206Z",
+            "headers": []
+        },
+        {
+            "_id": "d035d609-c1c3-43ac-9b52-77532986effe",
+            "colId": "c4581721-784f-4821-a34e-0058023c6ed4",
+            "containerId": "",
+            "name": "Mpesa Auth",
+            "url": "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2023-03-10T22:51:45.219Z",
+            "modified": "2023-03-10T22:53:04.226Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "grant_type",
+                    "value": "client_credentials",
+                    "isPath": false
+                }
+            ],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "tKr965VyMOiaoiDBhggRvbYEP5vcP2kO",
+                    "password": "pJM7Iex6lGorMpWE"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "9440f3fb-0699-4141-a623-3c2ddc90d687",
+            "colId": "c4581721-784f-4821-a34e-0058023c6ed4",
+            "containerId": "",
+            "name": "Lipa Na Mpesa",
+            "url": "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-03-10T22:54:54.647Z",
+            "modified": "2023-03-10T23:24:23.683Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer kv67GdT6fzh9A0YebPI58A6ChChA"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\r\n    \"ShortCode\": 600986,\r\n    \"CommandID\": \"CustomerBuyGoodsOnline\",\r\n    \"Amount\": 1,\r\n    \"Msisdn\": 254745491093,\r\n    \"BillRefNumber\": \"null\"\r\n  }",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "35b58f6b-8496-45ee-a225-c5414ef708ec",
+            "colId": "c4581721-784f-4821-a34e-0058023c6ed4",
+            "containerId": "",
+            "name": "Lipa Na Mpesa Online",
+            "url": "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-03-10T22:58:00.316Z",
+            "modified": "2023-03-11T00:25:19.824Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "Bearer dXeP19pXko4hZdeZfaRyiv66CERt"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "  {\n    \"BusinessShortCode\": 174379,\n    \"Password\": \"MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjMwMzExMDIzNDM5\",\n    \"Timestamp\": \"20230311023439\",\n    \"TransactionType\": \"CustomerPayBillOnline\",\n    \"Amount\": 1,\n    \"PartyA\": 254745491093,\n    \"PartyB\": 174379,\n    \"PhoneNumber\": 254745491093,\n    \"CallBackURL\": \"https://cd66-105-160-122-64.eu.ngrok.io/lipia/lipa-na-mpesa/\",\n    \"AccountReference\": \"DaboPay\",\n    \"TransactionDesc\": \"Payment of X\" \n  }",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "93e7069b-1774-425b-ad28-1d3c21840ed6",
+            "colId": "c4581721-784f-4821-a34e-0058023c6ed4",
+            "containerId": "",
+            "name": "Mpesa Callback URL",
+            "url": "https://cd66-105-160-122-64.eu.ngrok.io/lipia/lipa-na-mpesa/",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-03-10T23:47:05.252Z",
+            "modified": "2023-03-11T00:18:26.828Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"body\": {\n    \"stkCallback\": {\"MerchantRequestID\": \"101035-71435381-1\", \"CheckoutRequestID\": \"ws_CO_11032023030458446745491093\", \"ResultCode\": 0, \"ResultDesc\": \"The service request is processed successfully.\", \"CallbackMetadata\": {\"Item\": [{\"Name\": \"Amount\", \"Value\": 1.0}, {\"Name\": \"MpesaReceiptNumber\", \"Value\": \"RCB2IF7UX4\"}, {\"Name\": \"Balance\"}, {\"Name\": \"TransactionDate\", \"Value\": 20230311030509}, {\"Name\": \"PhoneNumber\", \"Value\": 254745491093}]}}}\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

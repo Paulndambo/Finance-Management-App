@@ -63,8 +63,7 @@ class Bill(models.Model):
 
 
 class Loan(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=255)
     loan_type = models.CharField(max_length=255, choices=LOAN_TYPE)
     amount_loaned = models.DecimalField(max_digits=10, decimal_places=2)
