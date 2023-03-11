@@ -21,6 +21,3 @@ class MpesaViewSet(ModelViewSet):
             return Response({"message": "Transaction Successful!!"}, status=status.HTTP_201_CREATED)
         return Response({"failed": "Transaction Failed"}, status=status.HTTP_400_BAD_REQUEST)
 
-
-body = {'stkCallback': {'MerchantRequestID': '101035-71435381-1', 'CheckoutRequestID': 'ws_CO_11032023030458446745491093', 'ResultCode': 0, 'ResultDesc': 'The service request is processed successfully.', 'CallbackMetadata': {
-    'Item': [{'Name': 'Amount', 'Value': 1.0}, {'Name': 'MpesaReceiptNumber', 'Value': 'RCB2IF7UX4'}, {'Name': 'Balance'}, {'Name': 'TransactionDate', 'Value': 20230311030509}, {'Name': 'PhoneNumber', 'Value': 254745491093}]}}}
