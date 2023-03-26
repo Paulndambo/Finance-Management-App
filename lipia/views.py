@@ -2,14 +2,20 @@ from django.shortcuts import render
 from .serializers import (
     MpesaResponseBodySerializer,
     ServiceProviderSerializer, 
-    MpesaTransactionSerializer
+    MpesaTransactionSerializer,
+    LipaNaMpesaSerializer
 )
 from .models import MpesaResponseBody, ServiceProvider, MpesaTransaction
+from .mpesa_metadata_transformer import mpesa_metadata_transformative_function
+from .utils import MpesaGateWay
+
+
 
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework import status, generics
-from .mpesa_metadata_transformer import mpesa_metadata_transformative_function
+
+
 # Create your views here.
 class MpesaViewSet(ModelViewSet):
     queryset = MpesaResponseBody.objects.all()
@@ -39,4 +45,21 @@ class MpesaTransactionViewSet(ModelViewSet):
     serializer_class = MpesaTransactionSerializer
 
 
+class LipaNaMpesaGenericAPIView(generics.CreateAPIView):
+    serializer_class = LipaNaMpesaSerializer
+
+    def post(self, request, *args, **kwargs):
+        data = request.data 
+        serializer = self.serializer_class(data=data)
+        if serializer.is_valid(raise_exception=True):
+            cl = MpesaGateWay()
+            cl.stk_push(
+                phone_number=data.get('phone_number'),
+                amount=int(data.get('amount')),
+                callback_url="https://perfin-backend.azurewebsites.net/lipia/lipa-na-mpesa/",
+                account_reference="Perfin Mpesa",
+                transaction_desc="This is perfin mpesa transaction"
+            )
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response({"failed": "Payment Request Failed!!"}, status=status.HTTP_400_BAD_REQUEST)
 
