@@ -18,3 +18,8 @@ class MpesaTransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = MpesaTransaction
         fields = "__all__"
+
+
+class LipaNaMpesaSerializer(serializers.Serializer):
+    phone_number = serializers.CharField(max_length=255)
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2)
