@@ -22,6 +22,7 @@ class BillViewSet(ModelViewSet):
     def get_serializer_context(self):
         user = self.request.user
         return {"user": user}
+        
 
 class BudgetViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
