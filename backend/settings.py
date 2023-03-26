@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'data',
     'users',
     'lipia',
+    'core',
 ]
 
 MIDDLEWARE = [
