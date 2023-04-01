@@ -23,6 +23,7 @@ BILL_NUMBER_TYPE_CHOICES = (
     ("paybill_number", "Paybill Number"),
 )
 
+
 class ServiceProvider(AbstractBaseModel):
     name = models.CharField(max_length=255)
     services = models.JSONField(null=True, blank=True)
