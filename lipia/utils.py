@@ -150,11 +150,9 @@ class MpesaGateWay:
     @Decorators.refreshToken
     def c2b(self, amount, phone_number, bill_reference_number):
         if str(bill_reference_number).strip() == '':
-            raise MpesaInvalidParameterException(
-            	'Bill reference cannot be blank')
+            raise MpesaInvalidParameterException('Bill reference cannot be blank')
         if str(phone_number).strip() == '':
-            raise MpesaInvalidParameterException(
-            	'Transaction description cannot be blank')
+            raise MpesaInvalidParameterException('Transaction description cannot be blank')
         if not isinstance(amount, int):
             raise MpesaInvalidParameterException('Amount must be an integer')
 
