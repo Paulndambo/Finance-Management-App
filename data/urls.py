@@ -8,4 +8,5 @@ router.register("bills", views.BillViewSet, basename="bills")
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("bill-update/", views.BillUpdateAPIView.as_view(), name="bill-update"),
 ]
