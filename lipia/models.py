@@ -26,6 +26,7 @@ BILL_NUMBER_TYPE_CHOICES = (
 class ServiceProvider(AbstractBaseModel):
     name = models.CharField(max_length=255)
     services = models.JSONField(null=True, blank=True)
+    ussd_code = models.CharField(max_length=255, null=True)
     bill_number = models.CharField(max_length=255)
     bill_number_type = models.CharField(max_length=255)
 

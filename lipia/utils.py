@@ -133,7 +133,6 @@ class MpesaGateWay:
             "CallBackURL": callback_url,
             "AccountReference": account_reference,
             "TransactionDesc": transaction_desc,
-
         }
 
         try:
