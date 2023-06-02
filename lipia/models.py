@@ -30,6 +30,9 @@ class ServiceProvider(AbstractBaseModel):
     ussd_code = models.CharField(max_length=255, null=True)
     bill_number = models.CharField(max_length=255)
     bill_number_type = models.CharField(max_length=255)
+    consumer_key = models.CharField(max_length=100, null=True)
+    consumer_secret = models.CharField(max_length=100, null=True)
+    callback_url = models.URLField(max_length=1000, null=True)
 
     def __str__(self):
         return self.name

@@ -21,6 +21,11 @@ BILL_TYPES = (
     ("other", "Other"),
 )
 
+PAYMENT_NUMBER_TYPES = (
+    ("till_number", "Till Number"),
+    ("paybill_number", "Paybill Number"),
+)
+
 YEARS_LIST = (
     ("2023", "2023"),
     ("2024", "2024"),

@@ -4,7 +4,8 @@ from .views import (
     MpesaViewSet, 
     ServiceProviderViewSet, 
     MpesaTransactionViewSet,
-    LipaNaMpesaGenericAPIView
+    LipaNaMpesaGenericAPIView,
+    C2BLipaNaMpesaGenericAPIView
 )
 
 router = DefaultRouter()
@@ -15,4 +16,5 @@ router.register("mpesa-transactions",  MpesaTransactionViewSet, basename="mpesa-
 urlpatterns = [
     path("", include(router.urls)),
     path("lipa-na-mpesa/", LipaNaMpesaGenericAPIView.as_view(), name="lipa-na-mpesa"),
+    path("c2b-lipa-na-mpesa/", C2BLipaNaMpesaGenericAPIView.as_view(), name="c2b-lipa-na-mpesa"),
 ]

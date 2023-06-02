@@ -3,7 +3,8 @@ from .serializers import (
     MpesaResponseBodySerializer,
     ServiceProviderSerializer, 
     MpesaTransactionSerializer,
-    LipaNaMpesaSerializer
+    LipaNaMpesaSerializer,
+    CustomerToBusinessLipaNaMpesaSerializer
 )
 from .models import MpesaResponseBody, ServiceProvider, MpesaTransaction
 from .mpesa_metadata_transformer import mpesa_metadata_transformative_function
@@ -63,3 +64,16 @@ class LipaNaMpesaGenericAPIView(generics.CreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response({"failed": "Payment Request Failed!!"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+
+class C2BLipaNaMpesaGenericAPIView(generics.CreateAPIView):
+    serializer_class = CustomerToBusinessLipaNaMpesaSerializer
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+
+        serializer = self.serializer_class(data=data)
+
+        if serializer.is_valid(raise_exception=True):
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
