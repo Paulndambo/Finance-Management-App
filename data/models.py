@@ -1,6 +1,13 @@
 from django.db import models
 from django.conf import settings
-from core.constants import MONTHS_LIST, YEARS_LIST, BILL_TYPES
+from core.constants import (
+    MONTHS_LIST, 
+    YEARS_LIST, 
+    BILL_TYPES,
+    TODO_STATUS_CHOICES,
+    EVENT_TYPE_CHOICES,
+    EVENT_STATUS_CHOICES
+)
 
 # Create your models here.
 LOAN_TYPE = (
@@ -57,3 +64,26 @@ class Loan(models.Model):
     def __str__(self):
         return self.name
 
+
+class Todo(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=500)
+    description = models.TextField(null=True)
+    start_date = models.DateField()
+    end_date = models.DateField(null=True)
+    status = models.CharField(max_length=255, default="todo", choices=TODO_STATUS_CHOICES)
+
+    def __str__(self):
+        return self.title
+    
+class Event(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=500)
+    description = models.TextField(null=True)
+    event_date = models.DateField(null=True)
+    event_type = models.CharField(max_length=255, choices=EVENT_TYPE_CHOICES)
+    event_status = models.CharField(max_length=255, choices=EVENT_STATUS_CHOICES)
+    
+
+    def __str__(self):
+        return self.title

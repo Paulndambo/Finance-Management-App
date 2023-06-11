@@ -49,6 +49,11 @@ class RegisterAPI(generics.GenericAPIView):
         return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ProfileModelViewSet(ModelViewSet):
+class ProfileGenericAPIView(generics.ListCreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+    #def get(self, request, *args, **kwargs):
+    #    profiles = Profile.objects.all()
+    #    serializer = self.serializer_class(instance=profiles)
+    #    return Response(serializer.data, status=status.HTTP_200_OK)

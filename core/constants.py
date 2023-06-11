@@ -13,6 +13,25 @@ MONTHS_LIST = (
     ("december", "December"),
 )
 
+TODO_STATUS_CHOICES = (
+    ("todo", "Todo"),
+    ("in_progress", "In Progress"),
+    ("blocked", "Blocked"),
+    ("done", "Done"),
+)
+
+EVENT_TYPE_CHOICES = (
+    ("physical", "Physical"),
+    ("hybrid", "Hybrid"),
+    ("virtual", "Virtual"),
+)
+
+EVENT_STATUS_CHOICES = (
+    ("pending", "Pending"),
+    ("attended", "Attended"),
+    ("cancelled", "Cancelled"),
+)
+
 BILL_TYPES = (
     ("basic", "Basic"),
     ("family", "Family"),

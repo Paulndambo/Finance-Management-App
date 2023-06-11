@@ -174,10 +174,17 @@ SIMPLE_JWT = {
 }
 
 
-MPESA_ENVIRONMENT = "sandbox"
+MPESA_DEV_ENVIRONMENT = "sandbox"
+MPESA_PROD_ENVIRONMENT = "production"
 MPESA_CONSUMER_KEY = "SuRXlrlXPHcqCAvqWnqWO4zQ4rQ6ImHT"
 MPESA_CONSUMER_SECRET = "UyIH5o7OWTO4TV5R"
 MPESA_SHORTCODE = "174379"
 MPESA_EXPRESS_SHORTCODE = "174379"
 MPESA_SHORTCODE_TYPE = "paybill"
 MPESA_PASSKEY = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+
+MPESA_ACCESS_DEV_TOKEN_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+MPESA_ACCESS_PROD_TOKEN_URL = ""
+
+MPESA_DEV_CHECKOUT_URL = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'
+MPESA_PROD_CHECKOUT_URL = ''

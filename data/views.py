@@ -1,7 +1,13 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
-from .models import Bill, Budget
-from .serializers import BillSerializer, BudgetSerializer, BillUpdateSerializer
+from .models import Bill, Budget, Event, Todo
+from .serializers import (
+    BillSerializer, 
+    BudgetSerializer, 
+    BillUpdateSerializer,
+    EventSerializer,
+    TodoSerializer
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status, generics
@@ -73,3 +79,27 @@ class BudgetViewSet(ModelViewSet):
         return {"user": user}
 
 
+class TodoViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return self.queryset
+        else:
+            return self.queryset.filter(user=user)
+        
+
+class EventViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+    def get_request(self):
+        user = self.request.user
+        if user.is_superuser:
+            return self.queryset
+        else:
+            return self.queryset.filter(user=user)

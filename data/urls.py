@@ -5,6 +5,8 @@ from .import views
 router = DefaultRouter()
 router.register("budgets", views.BudgetViewSet, basename="budgets")
 router.register("bills", views.BillViewSet, basename="bills")
+router.register("todos", views.TodoViewSet, basename="todos")
+router.register("events", views.EventViewSet, basename="events")
 
 urlpatterns = [
     path("", include(router.urls)),

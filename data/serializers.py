@@ -1,5 +1,17 @@
 from rest_framework import serializers
-from .models import Budget, Bill
+from .models import Budget, Bill, Todo, Event
+
+
+class TodoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Todo
+        fields = "__all__"
+
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = "__all__"
 
 
 class BillSerializer(serializers.ModelSerializer):

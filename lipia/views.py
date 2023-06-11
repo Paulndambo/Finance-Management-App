@@ -83,8 +83,10 @@ class C2BLipaNaMpesaGenericAPIView(generics.CreateAPIView):
                     validated_data_dict["phone_number"],
                     validated_data_dict["amount"],
                     validated_data_dict["pay_type"],
-                    validated_data_dict["business_number"]
+                    validated_data_dict["business_number"],
+                    validated_data_dict["token"]
                 )
+            
             except Exception as e:
                 raise e
             return Response(serializer.data, status=status.HTTP_201_CREATED)

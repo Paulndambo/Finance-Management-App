@@ -30,3 +30,4 @@ class CustomerToBusinessLipaNaMpesaSerializer(serializers.Serializer):
     amount = serializers.DecimalField(max_digits=50, decimal_places=2)
     pay_type = serializers.CharField(max_length=255)
     business_number = serializers.CharField(max_length=255)
+    token = serializers.CharField(max_length=255)
