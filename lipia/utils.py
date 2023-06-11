@@ -50,14 +50,19 @@ class MpesaGateWay:
     checkout_url = None
     timestamp = None
 
-    def __init__(self):
+    def __init__(self, business_shortcode, consumer_key, consumer_secret, callback_url, phone_number, amount, account_reference, transaction_desc):
         now = datetime.now()
-        self.business_shortcode = "174379"  # env("business_shortcode")
+        self.business_shortcode = business_shortcode #"174379"  # env("business_shortcode")
         # env("consumer_key")
-        self.consumer_key = "tKr965VyMOiaoiDBhggRvbYEP5vcP2kO"
-        self.consumer_secret = "pJM7Iex6lGorMpWE"  # env("consumer_secret")
+        self.consumer_key = consumer_key #"tKr965VyMOiaoiDBhggRvbYEP5vcP2kO"
+        self.consumer_secret = consumer_secret #"pJM7Iex6lGorMpWE"  # env("consumer_secret")
         # env("access_token_url")
-        self.access_token_url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'
+        self.access_token_url =  'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'
+        self.callback_url =callback_url
+        self.phone_number = phone_number
+        self.amount = amount
+        self.account_reference = account_reference
+        self.transaction_desc = transaction_desc
 
         self.password = self.generate_password()
         # env("checkout_url")
@@ -107,36 +112,42 @@ class MpesaGateWay:
 
 
     @Decorators.refreshToken
-    def stk_push(self, phone_number, amount, callback_url, account_reference, transaction_desc):
-        if str(account_reference).strip() == '':
+    def stk_push(self):
+        if str(self.account_reference).strip() == '':
             raise MpesaInvalidParameterException(
             	'Account reference cannot be blank')
-        if str(transaction_desc).strip() == '':
+        if str(self.transaction_desc).strip() == '':
             raise MpesaInvalidParameterException('Transaction description cannot be blank')
-        if not isinstance(amount, int):
+        if not isinstance(self.amount, int):
             raise MpesaInvalidParameterException('Amount must be an integer')
 
-        phone_number = phone_number
-        business_shortcode = self.business_shortcode
-        timestamp = self.timestamp
-        password = self.password
+        #phone_number = phone_number
+        #business_shortcode = self.business_shortcode
+        #timestamp = self.timestamp
+        #password = self.password
 
         req_data = {
-            "BusinessShortCode": business_shortcode,
-            "Password": password,
-            "Timestamp": timestamp,
+            "BusinessShortCode": self.business_shortcode,
+            "Password": self.password,
+            "Timestamp": self.timestamp,
             "TransactionType": "CustomerPayBillOnline",
-            "Amount": amount,
-            "PartyA": phone_number,
-            "PartyB": business_shortcode,
-            "PhoneNumber": phone_number,
-            "CallBackURL": callback_url,
-            "AccountReference": account_reference,
-            "TransactionDesc": transaction_desc,
+            "Amount": self.amount,
+            "PartyA": self.phone_number,
+            "PartyB": self.business_shortcode,
+            "PhoneNumber": self.phone_number,
+            "CallBackURL": self.callback_url,
+            "AccountReference": self.account_reference,
+            "TransactionDesc": self.transaction_desc,
         }
 
+        print(req_data)
+
         try:
-            res = requests.post(self.checkout_url, json=req_data, headers=self.headers, timeout=30)
+            res = requests.get(self.access_token_url, auth=HTTPBasicAuth(self.consumer_key, self.consumer_secret))
+            token = res.json()["access_token"]
+            headers = {"Authorization": "Bearer %s" % token}
+            print(f"Headers: {headers}")
+            res = requests.post(self.checkout_url, json=req_data, headers=headers, timeout=30)
             response = mpesa_response(res)
 
             return response

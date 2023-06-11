@@ -9,6 +9,7 @@ from .serializers import (
 from .models import MpesaResponseBody, ServiceProvider, MpesaTransaction
 from .mpesa_metadata_transformer import mpesa_metadata_transformative_function
 from .utils import MpesaGateWay
+from .mpesa_payments_processor import process_multi_merchant_mpesa_payments
 
 
 
@@ -57,7 +58,7 @@ class LipaNaMpesaGenericAPIView(generics.CreateAPIView):
             cl.stk_push(
                 phone_number=data.get('phone_number'),
                 amount=int(data.get('amount')),
-                callback_url="https://perfin-backend.azurewebsites.net/lipia/lipa-na-mpesa/",
+                callback_url="https://a980-105-160-64-33.ngrok-free.app/lipia/lipa-na-mpesa/",
                 account_reference="Perfin Mpesa",
                 transaction_desc="This is perfin mpesa transaction"
             )
@@ -75,5 +76,16 @@ class C2BLipaNaMpesaGenericAPIView(generics.CreateAPIView):
         serializer = self.serializer_class(data=data)
 
         if serializer.is_valid(raise_exception=True):
+            validated_data = serializer.validated_data
+            validated_data_dict = dict(validated_data)
+            try:
+                process_multi_merchant_mpesa_payments(
+                    validated_data_dict["phone_number"],
+                    validated_data_dict["amount"],
+                    validated_data_dict["pay_type"],
+                    validated_data_dict["business_number"]
+                )
+            except Exception as e:
+                raise e
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
