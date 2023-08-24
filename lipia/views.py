@@ -57,7 +57,7 @@ class LipaNaMpesaGenericAPIView(generics.CreateAPIView):
             cl.stk_push(
                 phone_number=data.get('phone_number'),
                 amount=int(data.get('amount')),
-                callback_url="https://perfin-backend.azurewebsites.net/lipia/lipa-na-mpesa/",
+                callback_url="https://f735-105-160-117-204.ngrok-free.app/lipia/lipa-na-mpesa/",
                 account_reference="Perfin Mpesa",
                 transaction_desc="This is perfin mpesa transaction"
             )

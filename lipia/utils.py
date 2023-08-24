@@ -8,7 +8,7 @@ from datetime import datetime
 from requests.auth import HTTPBasicAuth
 from requests import Response
 
-from booking.settings import env
+
 from .models import *
 from .exceptions import *
 
@@ -56,17 +56,18 @@ class MpesaGateWay:
     access_token_expiration = None
     checkout_url = None
     timestamp = None
+    headers = None
 
     def __init__(self):
         now = datetime.now()
         self.business_shortcode = MPESA_SHORTCODE
         self.consumer_key = MPESA_CONSUMER_KEY
         self.consumer_secret = MPESA_CONSUMER_SECRET
-        self.access_token_url = env("access_token_url")
+        self.access_token_url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'
+        self.checkout_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
 
         self.password = self.generate_password()
-        self.checkout_url = env("checkout_url")
-
+    
         try:
             self.access_token = self.getAccessToken()
 
@@ -105,8 +106,7 @@ class MpesaGateWay:
     def generate_password(self):
         """Generates mpesa api password using the provided shortcode and passkey"""
         self.timestamp = now.strftime("%Y%m%d%H%M%S")
-        password_str = env("business_shortcode") + \
-            env("pass_key") + self.timestamp
+        password_str = MPESA_SHORTCODE + MPESA_PASSKEY + self.timestamp
         password_bytes = password_str.encode("ascii")
         return base64.b64encode(password_bytes).decode("utf-8")
 
@@ -144,6 +144,8 @@ class MpesaGateWay:
             res = requests.post(self.checkout_url, json=req_data,
                                 headers=self.headers, timeout=30)
             response = mpesa_response(res)
+
+            print(f"Mpesa Res: {res.text}")
 
             return response
         except requests.exceptions.ConnectionError:
