@@ -8,14 +8,21 @@ from datetime import datetime
 from requests.auth import HTTPBasicAuth
 from requests import Response
 
-#from mpesa_integration.settings import env
+from booking.settings import env
 from .models import *
 from .exceptions import *
-from django.conf import settings
 
 logging = logging.getLogger("default")
 
 now = datetime.now()
+
+MPESA_ENVIRONMENT = "sandbox"
+MPESA_CONSUMER_KEY = "SuRXlrlXPHcqCAvqWnqWO4zQ4rQ6ImHT"
+MPESA_CONSUMER_SECRET = "UyIH5o7OWTO4TV5R"
+MPESA_SHORTCODE = "174379"
+MPESA_EXPRESS_SHORTCODE = "174379"
+MPESA_SHORTCODE_TYPE = "paybill"
+MPESA_PASSKEY = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
 
 
 class MpesaResponse(Response):
@@ -52,16 +59,13 @@ class MpesaGateWay:
 
     def __init__(self):
         now = datetime.now()
-        self.business_shortcode = "174379"  # env("business_shortcode")
-        # env("consumer_key")
-        self.consumer_key = "tKr965VyMOiaoiDBhggRvbYEP5vcP2kO"
-        self.consumer_secret = "pJM7Iex6lGorMpWE"  # env("consumer_secret")
-        # env("access_token_url")
-        self.access_token_url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'
+        self.business_shortcode = MPESA_SHORTCODE
+        self.consumer_key = MPESA_CONSUMER_KEY
+        self.consumer_secret = MPESA_CONSUMER_SECRET
+        self.access_token_url = env("access_token_url")
 
         self.password = self.generate_password()
-        # env("checkout_url")
-        self.checkout_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+        self.checkout_url = env("checkout_url")
 
         try:
             self.access_token = self.getAccessToken()
@@ -101,10 +105,10 @@ class MpesaGateWay:
     def generate_password(self):
         """Generates mpesa api password using the provided shortcode and passkey"""
         self.timestamp = now.strftime("%Y%m%d%H%M%S")
-        password_str = settings.MPESA_SHORTCODE + settings.MPESA_PASSKEY + self.timestamp
+        password_str = env("business_shortcode") + \
+            env("pass_key") + self.timestamp
         password_bytes = password_str.encode("ascii")
         return base64.b64encode(password_bytes).decode("utf-8")
-
 
     @Decorators.refreshToken
     def stk_push(self, phone_number, amount, callback_url, account_reference, transaction_desc):
@@ -112,7 +116,8 @@ class MpesaGateWay:
             raise MpesaInvalidParameterException(
             	'Account reference cannot be blank')
         if str(transaction_desc).strip() == '':
-            raise MpesaInvalidParameterException('Transaction description cannot be blank')
+            raise MpesaInvalidParameterException(
+            	'Transaction description cannot be blank')
         if not isinstance(amount, int):
             raise MpesaInvalidParameterException('Amount must be an integer')
 
@@ -136,34 +141,6 @@ class MpesaGateWay:
         }
 
         try:
-            res = requests.post(self.checkout_url, json=req_data, headers=self.headers, timeout=30)
-            response = mpesa_response(res)
-
-            return response
-        except requests.exceptions.ConnectionError:
-            raise MpesaConnectionError('Connection failed')
-        except Exception as ex:
-            raise MpesaConnectionError(str(ex))
-
-
-    @Decorators.refreshToken
-    def c2b(self, amount, phone_number, bill_reference_number):
-        if str(bill_reference_number).strip() == '':
-            raise MpesaInvalidParameterException('Bill reference cannot be blank')
-        if str(phone_number).strip() == '':
-            raise MpesaInvalidParameterException('Transaction description cannot be blank')
-        if not isinstance(amount, int):
-            raise MpesaInvalidParameterException('Amount must be an integer')
-
-        req_data = {
-            "CommandID": "CustomerPaybillOnline",
-            "Amount": amount,
-            "Msisdn": phone_number,
-            "BillRefNumber": bill_reference_number,
-            "ShortCode": self.business_shortcode
-        }
-
-        try:
             res = requests.post(self.checkout_url, json=req_data,
                                 headers=self.headers, timeout=30)
             response = mpesa_response(res)
@@ -173,3 +150,65 @@ class MpesaGateWay:
             raise MpesaConnectionError('Connection failed')
         except Exception as ex:
             raise MpesaConnectionError(str(ex))
+    """
+        logging.info("Mpesa request data {}".format(req_data))
+        logging.info("Mpesa response info {}".format(res_data))
+
+        if res.ok:
+            data["checkout_request_id"] = res_data["CheckoutRequestID"]
+
+            Transaction.objects.create(**data)
+        print(self.headers)
+        return res_data
+    
+    def check_status(self, data):
+        try:
+            status = data["Body"]["stkCallback"]["ResultCode"]
+        except Exception as e:
+            logging.error(f"Error: {e}")
+            status = 1
+        return status
+
+    def get_transaction_object(data):
+        checkout_request_id = data["Body"]["stkCallback"]["CheckoutRequestID"]
+        transaction, _ = Transaction.objects.get_or_create(
+            checkout_request_id=checkout_request_id
+        )
+
+        return transaction
+
+    def handle_successful_pay(self, data, transaction):
+        items = data["Body"]["stkCallback"]["CallbackMetadata"]["Item"]
+        for item in items:
+            if item["Name"] == "Amount":
+                amount = item["Value"]
+            elif item["Name"] == "MpesaReceiptNumber":
+                receipt_no = item["Value"]
+            elif item["Name"] == "PhoneNumber":
+                phone_number = item["Value"]
+
+        transaction.amount = amount
+        transaction.phone_number = PhoneNumber(raw_input=phone_number)
+        transaction.receipt_no = receipt_no
+        transaction.confirmed = True
+
+        return transaction
+
+    def callback_handler(self, data):
+        status = self.check_status(data)
+        transaction = self.get_transaction_object(data)
+        if status==0:
+            self.handle_successful_pay(data, transaction)
+        else:
+            transaction.status = 1
+
+        transaction.status = status
+        transaction.save()
+
+        transaction_data = TransactionSerializer(transaction).data
+
+        logging.info("Transaction completed info {}".format(transaction_data))
+
+        return Response({"status": "ok", "code": 0}, status=200)
+
+        """
