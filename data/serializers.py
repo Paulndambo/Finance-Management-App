@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Budget, Bill
+from .models import Budget, Bill, Expenditure
 
 class BillSerializer(serializers.ModelSerializer):
     class Meta:
@@ -97,3 +97,24 @@ class BudgetSerializer(serializers.ModelSerializer):
             },
             "investment": investment
         }
+
+
+class ExpenditureSerializer(serializers.ModelSerializer):
+    category_name = serializers.SerializerMethodField()
+    owner_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Expenditure
+        fields = "__all__"
+
+    def get_category_name(self, obj):
+        return obj.category.name if obj.category else None
+    
+    def get_owner_name(self, obj):
+        return f"{obj.owner.first_name} {obj.owner.last_name}"
+
+
+class CreateExpenditureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Expenditure
+        fields = ["name", "category", "amount"]

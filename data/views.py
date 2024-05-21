@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
-from .models import Bill, Budget
-from .serializers import BillSerializer, BudgetSerializer, BillUpdateSerializer
+from .models import Bill, Budget, Expenditure
+from .serializers import BillSerializer, BudgetSerializer, BillUpdateSerializer, ExpenditureSerializer, CreateExpenditureSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status, generics
+from core.models import BudgetCategory
 # Create your views here.
 class BillViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -71,3 +72,28 @@ class BudgetViewSet(ModelViewSet):
     def get_serializer_context(self):
         user = self.request.user
         return {"user": user}
+
+
+class ExpenditureViewSet(ModelViewSet):
+    queryset = Expenditure.objects.all()
+    serializer_class = ExpenditureSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return super().get_queryset()
+    
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return CreateExpenditureSerializer
+        return ExpenditureSerializer
+    
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        user = request.user
+        serializer = self.serializer_class(data=data)
+        if serializer.is_valid(raise_exception=True):
+            expenditure = serializer.save()
+            expenditure.owner = user
+            expenditure.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
