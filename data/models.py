@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from core.constants import MONTHS_LIST, YEARS_LIST, BILL_TYPES
+from core.models import AbstractBaseModel, BudgetCategory
 
 # Create your models here.
 LOAN_TYPE = (
@@ -57,3 +58,12 @@ class Loan(models.Model):
     def __str__(self):
         return self.name
 
+
+class Expenditure(AbstractBaseModel):
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=255)
+    category = models.ForeignKey(BudgetCategory, on_delete=models.SET_NULL, null=True)
+    amount = models.DecimalField(max_digits=100, decimal_places=2)
+
+    def __str__(self):
+        return self.name
