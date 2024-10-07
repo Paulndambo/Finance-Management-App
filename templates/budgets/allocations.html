@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="balance-section d-flex justify-content-between align-items-center">
+                <div>
+                    <h3>Income</h3>
+                    <h1 class="text-highlight">${{income}}</h1>
+                </div>
+                <div class="icon-bg">
+                    <i class="fas fa-wallet fa-2x"></i>
+                </div>
+            </div>
+        </div>
+        <!-- Cards Section -->
+        <div class="col-md-4">
+            <div class="card p-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="icon-bg">
+                        <i class="fas fa-coins fa-2x"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Budgeted</h5>
+                        <h4 class="text-highlight">${{allocated}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="icon-bg bg-danger">
+                        <i class="fas fa-credit-card fa-2x"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Spend</h5>
+                        <h4 class="text-danger">${{spend}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="icon-bg bg-warning">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Savings</h5>
+                        <h4 class="text-warning">${{balance}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="col-md-12 recent-transactions mt-4">
+            <h4>Budget Allocations</h4>
+            <table class="table table-bordered mt-3">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Allocation Type</th>
+                        <th>Category</th>
+                        <th>Allocated</th>
+                        <th>Spend</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for allocation in page_obj %}
+                    <tr>
+                        <td>{{allocation.id}}</td>
+                        <td>{{allocation.allocation_type}}</td>
+                        <td>{{allocation.category}}</td>
+                        <td>{{allocation.amount_allocated}}</td>
+                        <td class="text-danger">${{allocation.amount_spend}}</td>
+                    </tr>
+                   {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-end">
+                    {% if page_obj.has_previous %}   
+                      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                    {% endif %}
+                    <a class="page-link" href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
+                    {% if page_obj.has_next %}    
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                    {% endif %}   
+                  </ul>
+                </nav>
+              </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
