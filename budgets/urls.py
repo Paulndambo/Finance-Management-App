@@ -1,6 +1,7 @@
 from django.urls import path
-from budgets.views import BudgetAllocationListCreateView
+from budgets.views import budgets, budget_allocations
 
 urlpatterns = [
-    path("allocations/", BudgetAllocationListCreateView.as_view(), name="allocations"),
+    path("", budgets, name="budgets"),
+    path("allocations/<int:id>/", budget_allocations, name="allocations"),
 ]

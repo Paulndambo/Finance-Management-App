@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-3" style="height: 100vh;">
+    <div class="row">
+        <!-- Recent Transactions -->
+        <div class="col-md-12 recent-transactions mt-2">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>Recent Transactions</h4>
+                <!-- Search and Create Button -->
+                <div class="d-flex">
+                    <input type="text" class="form-control me-2" placeholder="Search transactions...">
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newTransactionModal">
+                        New
+                    </button>
+                </div>
+            </div>
+            <table class="table table-responsiveable-bordered mt-3">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="">#</th>
+                        <th scope="">Date</th>
+                        <th scope="">Income</th>
+                        <th scope="">Allocated</th>
+                        <th scope="">Spend</th>
+                        <th>Status</th>
+                        <th colspan="3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for budget in page_obj %}
+                    <tr>
+                        <td>{{budget.id}}</td>
+                        <td>{{budget.month}} {{budget.year}}</td>
+                        <td>{{budget.income}}</td>
+                        <td>{{budget.amount_allocated}}</td>
+                        <td class="text-danger">{{budget.amount_spend}}</td>
+                        <td>{% if budget.active %} Open {% else %} Closed {% endif %}</td>
+                        <td>
+                            <a href="{% url 'allocations' budget.id %}" class="btn btn-info btn-sm"><i class="fa-regular fa-eye"></i></a>
+                        </td>
+                        <td>
+                            <a href="" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                        </td>
+                        <td>
+                            <a href="" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-end">
+                    {% if page_obj.has_previous %}   
+                      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                    {% endif %}
+                    <a class="page-link" href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
+                    {% if page_obj.has_next %}    
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                    {% endif %}   
+                  </ul>
+                </nav>
+              </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
