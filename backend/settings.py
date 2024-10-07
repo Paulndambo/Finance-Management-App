@@ -13,7 +13,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
+AUTH_USER_MODEL = 'users.User'
 # Application definition
 
 INSTALLED_APPS = [
@@ -26,10 +26,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'drf_yasg',
-    'data',
-    'users',
-    'lipia',
+    
     'core',
+    "users",
+    "budgets",
+    "finances",
 ]
 
 MIDDLEWARE = [
