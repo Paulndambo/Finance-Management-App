@@ -3,33 +3,35 @@
 {% block content %}
 <div class="container mt-3">
     <div class="row">
-        <div class="col-md-12 mb-4">
-            <div class="balance-section d-flex justify-content-between align-items-center">
-                <div>
-                    <h3>Income</h3>
-                    <h1 class="text-highlight">${{income}}</h1>
-                </div>
-                <div class="icon-bg">
-                    <i class="fas fa-wallet fa-2x"></i>
+        <!-- Cards Section -->
+        <div class="col-md-3">
+            <div class="card p-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="icon-bg bg-primary">
+                        <i class="fas fa-wallet fa-2x"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Income</h5>
+                        <h4 class="text-success">${{income}}</h4>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Cards Section -->
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card p-3 mb-3">
                 <div class="d-flex align-items-center">
-                    <div class="icon-bg">
+                    <div class="icon-bg bg-primary">
                         <i class="fas fa-coins fa-2x"></i>
                     </div>
                     <div class="ms-3">
                         <h5>Budgeted</h5>
-                        <h4 class="text-highlight">${{allocated}}</h4>
+                        <h4 class="text-primary">${{allocated}}</h4>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card p-3 mb-3">
                 <div class="d-flex align-items-center">
                     <div class="icon-bg bg-danger">
@@ -43,7 +45,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card p-3 mb-3">
                 <div class="d-flex align-items-center">
                     <div class="icon-bg bg-warning">
@@ -58,8 +60,17 @@
         </div>
 
         <!-- Recent Transactions -->
-        <div class="col-md-12 recent-transactions mt-4">
-            <h4>Budget Allocations</h4>
+        <div class="col-md-12 recent-transactions mt-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>Allocations</h4>
+                <!-- Search and Create Button -->
+                <div class="d-flex">
+                    <input type="text" class="form-control me-2" placeholder="Search Allocations...">
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newAllocationModal">
+                        New
+                    </button>
+                </div>
+            </div>
             <table class="table table-bordered mt-3">
                 <thead class="table-light">
                     <tr>
