@@ -22,7 +22,6 @@
                         <th>#</th>
                         <th>Created On</th>
                         <th>Month</th>
-                        <th>Year</th>
                         <th>Total Income</th>
                         <th colspan="3"></th>
                     </tr>
@@ -32,8 +31,7 @@
                     <tr>
                         <td>{{income.id}}</td>
                         <td>{{income.created}}</td>
-                        <td>{{income.month}}</td>
-                        <td>{{income.year}}</td>
+                        <td>{{income.month}} {{income.year}}</td>
                         <td>{{income.amount}}</td>
                         <td>
                             <a href="{% url 'income-records' income.id %}" class="btn btn-info btn-sm"><i class="fa-regular fa-eye"></i></a>

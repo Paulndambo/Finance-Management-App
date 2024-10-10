@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="#">
+                <form method="POST" action="{% url 'delete-income' %}">
                     {% csrf_token %}
                     <input type="number" id="income_id" name="income_id" value="{{income.id}}" hidden readonly required />
                     <div class="mb-3">

@@ -9,6 +9,10 @@
                 <form method="POST" action="{% url 'new-income-record' %}">
                     {% csrf_token %}
                     <input type="number" id="income_id" name="income_id" value="{{income.id}}" hidden readonly required />
+                    <div class="mb-3">
+                        <label for="transactionDescription" class="form-label fw-bold">Received From</label>
+                        <input type="text" class="form-control" id="received_from" name="received_from" required />
+                    </div>
                     <div class="row mb-3">
                         <div class="col">
                             <label for="transactionDescription" class="form-label fw-bold">Amount</label>
@@ -20,6 +24,17 @@
                                 <option></option>
                                 {% for income_source in income_sources %}
                                     <option value="{{income_source}}">{{income_source}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Payment Method</label>
+                            <select class="form-select" name="payment_method" id="payment_method" required>
+                                <option></option>
+                                {% for payment_method in payment_methods %}
+                                    <option value="{{payment_method}}">{{payment_method}}</option>
                                 {% endfor %}
                             </select>
                         </div>

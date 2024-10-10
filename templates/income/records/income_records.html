@@ -21,7 +21,9 @@
                     <tr>
                         <th>#</th>
                         <th>Created On</th>
+                        <th>Received From</th>
                         <th>Source</th>
+                        <th>Payment Method</th>
                         <th>Month</th>
                         <th>Total Income</th>
                         <th colspan="2"></th>
@@ -31,17 +33,20 @@
                     {% for income_record in page_obj %}
                     <tr>
                         <td>{{income_record.id}}</td>
-                        <td>{{income_record.created}}</td>
+                        <td>{{income_record.created.date}}</td>
+                        <td>{{income_record.received_from}}</td>
                         <td>{{income_record.source}}</td>
+                        <td>{{income_record.payment_method}}</td>
                         <td>{{income_record.income.month}} {{income_record.income.year}}</td>
                         <td>{{income_record.amount}}</td>
-                       
                         <td>
-                            <a href="" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                            <a data-bs-toggle="modal" data-bs-target="#editIncomeRecordModal{{income_record.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
                         </td>
                         <td>
-                            <a href="" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                            <a data-bs-toggle="modal" data-bs-target="#deleteIncomeRecordModal{{income_record.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                         </td>
+                        {% include "income/records/edit_income_record.html" %}
+                        {% include "income/records/delete_income_record.html" %}
                     </tr>
                    {% endfor %}
                 </tbody>

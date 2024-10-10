@@ -16,6 +16,15 @@ MONTH_NAMES = (
     ("November", "November"),
     ("December", "December"),
 )
+
+payment_methods = (
+    ("Cash", "Cash"),
+    ("Card", "Card"),
+    ("Cheque", "Cheque"),
+    ("Bank Transfer", "Bank Transfer"),
+    ("Mpesa", "Mpesa"),
+    ("Other", "Other"),
+)
 class Income(AbstractBaseModel):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     month = models.CharField(max_length=255, choices=MONTH_NAMES)
@@ -27,9 +36,11 @@ class Income(AbstractBaseModel):
 
 class IncomeRecord(AbstractBaseModel):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    received_from = models.CharField(max_length=255, null=True)
     income = models.ForeignKey(Income, on_delete=models.CASCADE)    
     amount = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     source = models.CharField(max_length=255)
+    payment_method = models.CharField(max_length=255, choices=payment_methods, default="Mpesa")
 
     def __str__(self):
         return self.user.username
