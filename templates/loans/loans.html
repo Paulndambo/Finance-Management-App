@@ -71,9 +71,7 @@
 
     </div>
     <div class="row">
-        <!-- Cards Section -->
-        <!-- Recent Transactions -->
-        <div class="col-md-12 recent-transactions mt-3">
+        <div class="col-md-12 recent-transactions mt-2">
             <div class="d-flex justify-content-between align-items-center">
                 <h4>Loans</h4>
                 <!-- Search and Create Button -->
@@ -90,7 +88,8 @@
                         <th>#</th>
                         <th>Given By/To</th>
                         <th>Total Loan</th>
-                        <th>Amount Repaid</th>
+                        <th>Repaid</th>
+                        <th>Installment</th>
                         <th>Loan Type</th>
                         <th>Due Date</th>
                         <th colspan="3"></th>
@@ -103,18 +102,20 @@
                         <td>{{loan.given_by}}</td>
                         <td>{{loan.amount_to_repay}}</td>
                         <td>{{loan.amount_paid}}</td>
+                        <td>{{loan.installment}}</td>
                         <td>{{loan.loan_type}}</td>
                         <td>{{loan.date_due}}</td>
                         <td>
                             <a href="{% url 'loan-details' loan.id %}" class="btn btn-info btn-sm"><i class="fa-regular fa-eye"></i></a>
                         </td>
                         <td>
-                            <a data-bs-toggle="modal" data-bs-target="#editIncomeModal{{loan.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                            <a data-bs-toggle="modal" data-bs-target="#editLoanModal{{loan.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
                         </td>
                         <td>
-                            <a data-bs-toggle="modal" data-bs-target="#deleteIncomeModal{{loan.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                            <a data-bs-toggle="modal" data-bs-target="#deleteLoanModal{{loan.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                         </td>
-                        
+                    {% include "loans/edit_loan.html" %}
+                    {% include "loans/delete_loan.html" %}
                     </tr>
                    {% endfor %}
                 </tbody>

@@ -1,0 +1,40 @@
+<div class="modal fade" id="loanPaymentModal{{loan.id}}" tabindex="-1" aria-labelledby="newTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newTransactionModalLabel">Record Loan Payment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'make-payment' %}">
+                    {% csrf_token %}
+                    <input type="number" id="loan_id" name="loan_id" value="{{loan.id}}" hidden readonly required />
+                  
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Amount Paid</label>
+                            <input type="number" class="form-control" id="amount_paid" name="amount_paid" min="0" required />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Payment Method</label>
+                            <select class="form-select" id="payment_method" name="payment_method">
+                                <option></option>
+                                <option value="Cash">Cash</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                                <option value="Mpesa">Mpesa</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Record Payment</button>
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>
