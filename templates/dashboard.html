@@ -74,6 +74,7 @@
             </div>
 
             <div class="col-md-3">
+                <a href="{% url 'loans' %}" style="text-decoration: none; color: black;">
                 <div class="card p-3 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="icon-bg bg-info">
@@ -81,10 +82,11 @@
                         </div>
                         <div class="ms-3">
                             <h5>Loans</h5>
-                            <h4 class="text-info">$3,045</h4>
+                            <h4 class="text-info">${{loans_total}}</h4>
                         </div>
                     </div>
                 </div>
+            </a>
             </div>
             <!-- Recent Transactions -->
             <div class="col-md-12 recent-transactions mt-4">
