@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="balance-section d-flex justify-content-between align-items-center">
+                <div>
+                    <h3>Total Borrowed</h3>
+                    <h1 class="text-highlight">${{total_borrowed}}</h1>
+                </div>
+                <div class="icon-bg">
+                    <i class="fas fa-coins fa-2x"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="balance-section d-flex justify-content-between align-items-center">
+                <div>
+                    <h3>Total Given</h3>
+                    <h1 class="text-primary">${{total_given}}</h1>
+                </div>
+                <div class="icon-bg">
+                    <i class="fas fa-calculator fa-2x"></i>
+                </div>
+            </div>
+        </div>
+       
+        <div class="col-md-4">
+            <div class="card p-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="icon-bg">
+                        
+                        <i class="fas fa-chart-pie fa-2x"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Total Repaid</h5>
+                        <h4 class="text-highlight">${{total_repaid}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="icon-bg bg-danger">
+                        <i class="fas fa-credit-card fa-2x"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Total Owing</h5>
+                        <h4 class="text-danger">${{amount_owing}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="icon-bg">
+                        
+                        <i class="fas fa-chart-pie fa-2x"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h5>Total Owed</h5>
+                        <h4 class="text-highlight">${{amount_owed}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <!-- Cards Section -->
+        <!-- Recent Transactions -->
+        <div class="col-md-12 recent-transactions mt-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>Loans</h4>
+                <!-- Search and Create Button -->
+                <div class="d-flex">
+                    <input type="text" class="form-control me-2" placeholder="Search Allocations...">
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newLoanModal">
+                        New
+                    </button>
+                </div>
+            </div>
+            <table class="table table-bordered mt-3">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Given By/To</th>
+                        <th>Total Loan</th>
+                        <th>Amount Repaid</th>
+                        <th>Loan Type</th>
+                        <th>Due Date</th>
+                        <th colspan="3"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for loan in page_obj %}
+                    <tr>
+                        <td>{{loan.id}}</td>
+                        <td>{{loan.given_by}}</td>
+                        <td>{{loan.amount_to_repay}}</td>
+                        <td>{{loan.amount_paid}}</td>
+                        <td>{{loan.loan_type}}</td>
+                        <td>{{loan.date_due}}</td>
+                        <td>
+                            <a href="{% url 'loan-details' loan.id %}" class="btn btn-info btn-sm"><i class="fa-regular fa-eye"></i></a>
+                        </td>
+                        <td>
+                            <a data-bs-toggle="modal" data-bs-target="#editIncomeModal{{loan.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                        </td>
+                        <td>
+                            <a data-bs-toggle="modal" data-bs-target="#deleteIncomeModal{{loan.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                        </td>
+                        
+                    </tr>
+                   {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-end">
+                    {% if page_obj.has_previous %}   
+                      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                    {% endif %}
+                    <a class="page-link" href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
+                    {% if page_obj.has_next %}    
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                    {% endif %}   
+                  </ul>
+                </nav>
+              </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
