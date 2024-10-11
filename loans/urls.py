@@ -1,5 +1,14 @@
 from django.urls import path
-from loans.views import loans, new_loan, loan_details, edit_loan, delete_loan, make_loan_payment, delete_loan_payment, edit_loan_payment
+from loans.views import (
+    loans,
+    new_loan,
+    loan_details,
+    edit_loan,
+    delete_loan,
+    make_loan_payment,
+    delete_loan_payment,
+    edit_loan_payment,
+)
 
 urlpatterns = [
     path("", loans, name="loans"),

@@ -31,6 +31,7 @@
            
             <!-- Cards Section -->
             <div class="col-md-3">
+                <a href="{% url 'investments' %}" style="text-decoration: none; color: black;">
                 <div class="card p-3 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="icon-bg">
@@ -39,10 +40,11 @@
                         </div>
                         <div class="ms-3">
                             <h5>Investments</h5>
-                            <h4 class="text-highlight">${{income}}</h4>
+                            <h4 class="text-highlight">${{total_investments}}</h4>
                         </div>
                     </div>
                 </div>
+            </a>
             </div>
 
             <div class="col-md-3">

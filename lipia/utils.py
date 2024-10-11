@@ -8,7 +8,7 @@ from datetime import datetime
 from requests.auth import HTTPBasicAuth
 from requests import Response
 
-#from mpesa_integration.settings import env
+# from mpesa_integration.settings import env
 from .models import *
 from .exceptions import *
 from django.conf import settings
@@ -19,25 +19,25 @@ now = datetime.now()
 
 
 class MpesaResponse(Response):
-	response_description = ""
-	error_code = None
-	error_message = ''
+    response_description = ""
+    error_code = None
+    error_message = ""
 
 
 def mpesa_response(r):
-	"""
-	Create MpesaResponse object from requests.Response object
-	
-	Arguments:
-		r (requests.Response) -- The response to convert
-	"""
+    """
+    Create MpesaResponse object from requests.Response object
 
-	r.__class__ = MpesaResponse
-	json_response = r.json()
-	r.response_description = json_response.get('ResponseDescription', '')
-	r.error_code = json_response.get('errorCode')
-	r.error_message = json_response.get('errorMessage', '')
-	return r
+    Arguments:
+            r (requests.Response) -- The response to convert
+    """
+
+    r.__class__ = MpesaResponse
+    json_response = r.json()
+    r.response_description = json_response.get("ResponseDescription", "")
+    r.error_code = json_response.get("errorCode")
+    r.error_message = json_response.get("errorMessage", "")
+    return r
 
 
 class MpesaGateWay:
@@ -57,11 +57,13 @@ class MpesaGateWay:
         self.consumer_key = "tKr965VyMOiaoiDBhggRvbYEP5vcP2kO"
         self.consumer_secret = "pJM7Iex6lGorMpWE"  # env("consumer_secret")
         # env("access_token_url")
-        self.access_token_url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'
+        self.access_token_url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
 
         self.password = self.generate_password()
         # env("checkout_url")
-        self.checkout_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+        self.checkout_url = (
+            "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+        )
 
         try:
             self.access_token = self.getAccessToken()
@@ -76,8 +78,10 @@ class MpesaGateWay:
 
     def getAccessToken(self):
         try:
-            res = requests.get(self.access_token_url, auth=HTTPBasicAuth(
-            	self.consumer_key, self.consumer_secret))
+            res = requests.get(
+                self.access_token_url,
+                auth=HTTPBasicAuth(self.consumer_key, self.consumer_secret),
+            )
             print(res)
         except Exception as err:
             logging.error("Error {}".format(err))
@@ -91,7 +95,10 @@ class MpesaGateWay:
         @staticmethod
         def refreshToken(decorated):
             def wrapper(gateway, *args, **kwargs):
-                if (gateway.access_token_expiration and time.time() > gateway.access_token_expiration):
+                if (
+                    gateway.access_token_expiration
+                    and time.time() > gateway.access_token_expiration
+                ):
                     token = gateway.getAccessToken()
                     gateway.access_token = token
                 return decorated(gateway, *args, **kwargs)
@@ -101,20 +108,24 @@ class MpesaGateWay:
     def generate_password(self):
         """Generates mpesa api password using the provided shortcode and passkey"""
         self.timestamp = now.strftime("%Y%m%d%H%M%S")
-        password_str = settings.MPESA_SHORTCODE + settings.MPESA_PASSKEY + self.timestamp
+        password_str = (
+            settings.MPESA_SHORTCODE + settings.MPESA_PASSKEY + self.timestamp
+        )
         password_bytes = password_str.encode("ascii")
         return base64.b64encode(password_bytes).decode("utf-8")
 
-
     @Decorators.refreshToken
-    def stk_push(self, phone_number, amount, callback_url, account_reference, transaction_desc):
-        if str(account_reference).strip() == '':
+    def stk_push(
+        self, phone_number, amount, callback_url, account_reference, transaction_desc
+    ):
+        if str(account_reference).strip() == "":
+            raise MpesaInvalidParameterException("Account reference cannot be blank")
+        if str(transaction_desc).strip() == "":
             raise MpesaInvalidParameterException(
-            	'Account reference cannot be blank')
-        if str(transaction_desc).strip() == '':
-            raise MpesaInvalidParameterException('Transaction description cannot be blank')
+                "Transaction description cannot be blank"
+            )
         if not isinstance(amount, int):
-            raise MpesaInvalidParameterException('Amount must be an integer')
+            raise MpesaInvalidParameterException("Amount must be an integer")
 
         phone_number = phone_number
         business_shortcode = self.business_shortcode
@@ -136,40 +147,44 @@ class MpesaGateWay:
         }
 
         try:
-            res = requests.post(self.checkout_url, json=req_data, headers=self.headers, timeout=30)
+            res = requests.post(
+                self.checkout_url, json=req_data, headers=self.headers, timeout=30
+            )
             response = mpesa_response(res)
 
             return response
         except requests.exceptions.ConnectionError:
-            raise MpesaConnectionError('Connection failed')
+            raise MpesaConnectionError("Connection failed")
         except Exception as ex:
             raise MpesaConnectionError(str(ex))
 
-
     @Decorators.refreshToken
     def c2b(self, amount, phone_number, bill_reference_number):
-        if str(bill_reference_number).strip() == '':
-            raise MpesaInvalidParameterException('Bill reference cannot be blank')
-        if str(phone_number).strip() == '':
-            raise MpesaInvalidParameterException('Transaction description cannot be blank')
+        if str(bill_reference_number).strip() == "":
+            raise MpesaInvalidParameterException("Bill reference cannot be blank")
+        if str(phone_number).strip() == "":
+            raise MpesaInvalidParameterException(
+                "Transaction description cannot be blank"
+            )
         if not isinstance(amount, int):
-            raise MpesaInvalidParameterException('Amount must be an integer')
+            raise MpesaInvalidParameterException("Amount must be an integer")
 
         req_data = {
             "CommandID": "CustomerPaybillOnline",
             "Amount": amount,
             "Msisdn": phone_number,
             "BillRefNumber": bill_reference_number,
-            "ShortCode": self.business_shortcode
+            "ShortCode": self.business_shortcode,
         }
 
         try:
-            res = requests.post(self.checkout_url, json=req_data,
-                                headers=self.headers, timeout=30)
+            res = requests.post(
+                self.checkout_url, json=req_data, headers=self.headers, timeout=30
+            )
             response = mpesa_response(res)
 
             return response
         except requests.exceptions.ConnectionError:
-            raise MpesaConnectionError('Connection failed')
+            raise MpesaConnectionError("Connection failed")
         except Exception as ex:
             raise MpesaConnectionError(str(ex))

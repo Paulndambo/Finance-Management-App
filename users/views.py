@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from django.db.models import Q
 
+
 # Create your views here.
 def user_login(request):
     if request.method == "POST":

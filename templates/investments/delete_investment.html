@@ -1,0 +1,23 @@
+<div class="modal fade" id="deleteInvestmentModal{{investment.id}}" tabindex="-1" aria-labelledby="newTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newTransactionModalLabel">Delete Loan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'delete-investment' %}">
+                    {% csrf_token %}
+                    <input type="number" id="investment_id" name="investment_id" value="{{investment.id}}" hidden readonly required />
+                    <div class="mb-3">
+                        <p>Are you sure you want to delete investment record for <b>{{investment.month}} {{investment.year}}</b> of <b>{{investment.amount}}</b>?</p>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, Close</button>
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
