@@ -45,7 +45,7 @@ class Budget(AbstractBaseModel):
         return sum(allocations)
         
     def amount_spend(self):
-        allocations = self.budgetallocations.all().values_list("amount_spend", flat=True)
+        allocations = self.budgetexpenditures.all().values_list("amount", flat=True)
         return sum(allocations)
 
 
@@ -55,7 +55,11 @@ class BudgetAllocation(AbstractBaseModel):
     budget = models.ForeignKey(Budget, on_delete=models.CASCADE, related_name="budgetallocations")
     category = models.ForeignKey("core.BudgetCategory", on_delete=models.SET_NULL, null=True)
     amount_allocated = models.DecimalField(max_digits=100, decimal_places=2)
-    amount_spend = models.DecimalField(max_digits=100, decimal_places=2, default=0)
+    #amount_spend = models.DecimalField(max_digits=100, decimal_places=2, default=0)
 
     def __str__(self):
-        return self.budget.name
+        return f"{self.budget.month} {self.budget.year} {self.allocation_type}"
+    
+    def amount_spend(self):
+        expenses = self.allocationexpenditures.all().values_list("amount", flat=True)
+        return sum(expenses)

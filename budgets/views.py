@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from budgets.models import Budget, BudgetAllocation
 from core.models import BudgetCategory
 from budgets.serializers import BudgetAllocationSerializer
+from finances.models import Expenditure
 
 # Create your views here.
 
@@ -42,7 +43,7 @@ def budgets(request):
 
     total_allocated = sum(list(Budget.objects.filter(user=request.user).values_list("amount_allocated", flat=True)))
     total_budgeted = sum(list(BudgetAllocation.objects.filter(user=request.user).values_list("amount_allocated", flat=True)))
-    total_spend = sum(list(BudgetAllocation.objects.filter(user=request.user).values_list("amount_spend", flat=True)))
+    total_spend = sum(list(Expenditure.objects.filter(user=request.user).values_list("amount", flat=True)))
     
 
     paginator = Paginator(budgets, 7)
@@ -67,6 +68,8 @@ def budget_details(request, id):
 
     budget = Budget.objects.get(id=id)
     
+    total_spend = sum(list(Expenditure.objects.filter(user=request.user, budget=budget).values_list("amount", flat=True)))
+    
     total_budgeted = allocations.aggregate(total_budgeted=Sum('amount_allocated'))["total_budgeted"]
     
     budget_categories = BudgetCategory.objects.all()
@@ -78,10 +81,9 @@ def budget_details(request, id):
     context = {
         "page_obj": page_obj,
         "allocated": budget.amount_allocated,
-        "spend": budget.amount_spend,
-        "budgeted": total_budgeted,
-        "balance": budget.amount_allocated - budget.amount_spend,
+        "budgeted": total_budgeted if total_budgeted else 0,
         "allocation_types": ALLOCATION_CHOICES,
+        "total_spend": total_spend,
         "budget": budget,
         "budget_categories": budget_categories
     }

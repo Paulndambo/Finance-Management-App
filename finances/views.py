@@ -9,6 +9,7 @@ from rest_framework.response import Response
 
 from finances.models import Expenditure, Income, IncomeRecord, Investment
 from finances.serializers import ExpenditureSerializer
+from budgets.models import BudgetAllocation
 
 # Create your views here.
 months_list = [
@@ -210,3 +211,59 @@ def delete_investment(request):
         investment.delete()
         return redirect("investments")
     return render(request, "investments/delete_investment.html")
+
+
+@login_required(login_url="/users/login")
+def expenditures(request):
+    expenditure = Expenditure.objects.filter(user=request.user).order_by("-created")
+    paginator = Paginator(expenditure, 7)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    
+    allocations = BudgetAllocation.objects.filter(user=request.user)
+
+    context = {
+        "page_obj": page_obj,
+        "months": months_list,
+        "years": years_list,
+        "allocations": allocations
+    }
+    return render(request, "expenditures/expenditures.html", context)
+
+
+@login_required(login_url="/users/login")
+def new_expenditure(request):
+    if request.method == "POST":
+        allocation = BudgetAllocation.objects.get(id=request.POST.get("allocation_id"))
+        expenditure = Expenditure.objects.create(
+            user=request.user,
+            allocation=allocation,
+            budget=allocation.budget,
+            amount=request.POST.get("amount"),
+            description=request.POST.get("description"),
+        )
+        return redirect("expenditures")
+    return render(request, "expenditures/new_expenditure.html")
+
+
+@login_required(login_url="/users/login")
+def edit_expenditure(request):
+    if request.method == "POST":
+        expenditure = Expenditure.objects.get(id=request.POST.get("expenditure_id"))
+        expenditure.month = request.POST.get("month")
+        expenditure.year = int(request.POST.get("year"))
+        expenditure.amount = request.POST.get("amount")
+        expenditure.expenditure_type = request.POST.get("expenditure_type")
+        expenditure.notes = request.POST.get("notes")
+        expenditure.save()
+        return redirect("expenditures")
+    return render(request, "expenditures/edit_expenditure.html")
+
+
+@login_required(login_url="/users/login")
+def delete_expenditure(request):
+    if request.method == "POST":
+        expenditure = Expenditure.objects.get(id=request.POST.get("expenditure_id"))
+        expenditure.delete()
+        return redirect("expenditures")
+    return render(request, "expenditures/delete_expenditure.html")

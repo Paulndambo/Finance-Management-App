@@ -11,7 +11,11 @@ from finances.views import (
     investments,
     new_investment,
     delete_investment,
-    edit_investment
+    edit_investment,
+    expenditures,
+    new_expenditure,
+    edit_expenditure,
+    delete_expenditure,
 )
 
 urlpatterns = [
@@ -27,4 +31,9 @@ urlpatterns = [
     path("new-investment/", new_investment, name="new-investment"),
     path("edit-investment/", edit_investment, name="edit-investment"),
     path("delete-investment/", delete_investment, name="delete-investment"),
+    
+    path("expenditures/", expenditures, name="expenditures"),
+    path("new-expenditure/", new_expenditure, name="new-expenditure"),
+    path("edit-expenditure/", edit_expenditure, name="edit-expenditure"),
+    path("delete-expenditure/", delete_expenditure, name="delete-expenditure"),
 ]

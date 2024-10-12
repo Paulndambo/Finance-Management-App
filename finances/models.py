@@ -65,15 +65,10 @@ class IncomeRecord(AbstractBaseModel):
 
 class Expenditure(AbstractBaseModel):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
-    budget = models.ForeignKey(
-        "budgets.Budget", on_delete=models.CASCADE, related_name="budgetexpenditures"
-    )
-    allocation = models.ForeignKey(
-        "budgets.BudgetAllocation",
-        on_delete=models.CASCADE,
-        related_name="allocationexpenditures",
-    )
+    budget = models.ForeignKey("budgets.Budget", on_delete=models.CASCADE, related_name="budgetexpenditures")
+    allocation = models.ForeignKey("budgets.BudgetAllocation", on_delete=models.CASCADE, related_name="allocationexpenditures")
     amount = models.DecimalField(max_digits=100, decimal_places=2)
+    description = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return self.user.username
