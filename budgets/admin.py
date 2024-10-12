@@ -8,10 +8,8 @@ class BudgetAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "user",
-        "name",
         "year",
         "month",
-        "income",
         "amount_allocated",
         "amount_spend",
         "deficit",
@@ -23,7 +21,6 @@ class BudgetAllocationAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "allocation_type",
-        "category",
         "budget",
         "amount_allocated",
         "amount_spend",

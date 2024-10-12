@@ -11,8 +11,8 @@
                         <i class="fas fa-wallet fa-2x"></i>
                     </div>
                     <div class="ms-3">
-                        <h5>Income</h5>
-                        <h4 class="text-success">${{income}}</h4>
+                        <h5>Allocated</h5>
+                        <h4 class="text-success">${{allocated}}</h4>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="ms-3">
                         <h5>Budgeted</h5>
-                        <h4 class="text-primary">${{allocated}}</h4>
+                        <h4 class="text-primary">${{budgeted}}</h4>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                 <!-- Search and Create Button -->
                 <div class="d-flex">
                     <input type="text" class="form-control me-2" placeholder="Search Allocations...">
-                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newAllocationModal">
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newAllocationModal{{budget.id}}">
                         New
                     </button>
                 </div>
@@ -76,9 +76,10 @@
                     <tr>
                         <th>#</th>
                         <th>Allocation Type</th>
-                        <th>Category</th>
                         <th>Allocated</th>
                         <th>Spend</th>
+                        <th>Recorded On</th>
+                        <th colspan="2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,9 +87,17 @@
                     <tr>
                         <td>{{allocation.id}}</td>
                         <td>{{allocation.allocation_type}}</td>
-                        <td>{{allocation.category}}</td>
                         <td>{{allocation.amount_allocated}}</td>
                         <td class="text-danger">${{allocation.amount_spend}}</td>
+                        <td>{{allocation.created}}</td>
+                        <td>
+                            <a data-bs-toggle="modal" data-bs-target="#editAllocationModal{{allocation.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                        </td>
+                        <td>
+                            <a data-bs-toggle="modal" data-bs-target="#deleteAllocationModal{{allocation.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                        </td>
+                        {% include "budgets/allocations/edit_allocation.html" %}
+                        {% include "budgets/allocations/delete_allocation.html" %}
                     </tr>
                    {% endfor %}
                 </tbody>

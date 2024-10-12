@@ -1,25 +1,26 @@
-<div class="modal fade" id="newAllocationModal{{budget.id}}" tabindex="-1" aria-labelledby="newTransactionModalLabel" aria-hidden="true">
+<div class="modal fade" id="editAllocationModal{{allocation.id}}" tabindex="-1" aria-labelledby="newTransactionModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="newTransactionModalLabel">New Budget Allocation</h5>
+                <h5 class="modal-title" id="newTransactionModalLabel">Edit Budget Allocation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{% url 'new-allocation' %}">
+                <form method="POST" action="{% url 'edit-allocation' %}">
                     {% csrf_token %}
-                    <input type="number" id="budget_id" name="budget_id" value="{{budget.id}}" hidden readonly required />
+                    <input type="number" id="allocation_id" name="allocation_id" value="{{allocation.id}}" hidden readonly required />
                     <div class="mb-3">
                         <label for="transactionAmount" class="form-label fw-bold">Amount Allocated</label>
-                        <input type="number" class="form-control" id="amount_allocated" name="amount_allocated" min="0" required>
+                        <input type="number" class="form-control" id="amount_allocated" name="amount_allocated" value="{{allocation.amount_allocated}}" min="0" required>
                     </div>
-        
                     <div class="mb-3">
                         <label for="transactionCategory" class="form-label fw-bold">Allocation Category</label>
                         <select class="form-select" id="allocation_type" name="allocation_type">
-                            <option></option>
+                            <option value="{{allocation.allocation_type}}">{{allocation.allocation_type}}</option>
                             {% for allocation_type in allocation_types %}
-                                <option value="{{allocation_type}}">{{allocation_type}}</option>
+                                {% if allocation.allocation_type != allocation_type %}
+                                    <option value="{{allocation_type}}">{{allocation_type}}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>

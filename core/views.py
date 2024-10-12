@@ -12,11 +12,11 @@ def dashboard(request):
     user = request.user
     total_budgeted = sum(
         list(
-            Budget.objects.filter(user=user).values_list("amount_allocated", flat=True)
+            BudgetAllocation.objects.filter(user=user).values_list("amount_allocated", flat=True)
         )
     )
     total_spend = sum(
-        list(Budget.objects.filter(user=user).values_list("amount_spend", flat=True))
+        list(BudgetAllocation.objects.filter(user=user).values_list("amount_spend", flat=True))
     )
     balance = total_budgeted - total_spend
 
