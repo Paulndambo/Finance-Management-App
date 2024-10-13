@@ -1,0 +1,71 @@
+<div class="modal fade" id="editInvestmentModal{{investment.id}}" tabindex="-1" aria-labelledby="newTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newTransactionModalLabel">Edit Investment Record<h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'edit-investment' %}">
+                    {% csrf_token %}
+                    <input type="number" id="investment_id" name="investment_id" value="{{investment.id}}" hidden readonly required />
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Month</label>
+                            <select class="form-select" name="month" id="month" required>
+                                <option value="{{investment.month}}">{{investment.month}}</option>
+                                {% for month in months %}
+                                    {% if month != investment.month %}
+                                        <option value="{{month}}">{{month}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Year</label>
+                            <select class="form-select" name="year" id="year" required>
+                                <option value="{{investment.year}}">{{investment.year}}</option>
+                                {% for year in years %}
+                                    {% if year != investment.year %}
+                                        <option value="{{year}}">{{year}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Amount</label>
+                            <input type="number" class="form-control" id="amount" name="amount" min="0" value="{{investment.amount}}" required />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Investment Type</label>
+                            <select class="form-select" name="investment_type" id="investment_type" required>
+                                <option value="{{investment.investment_type}}">{{investment.investment_type}}</option>
+                                {% for investment_type in investment_types %}
+                                    {% if investment_type != investment.investment_type %}
+                                        <option value="{{investment_type}}">{{investment_type}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>  
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Description</label>
+                            <textarea class="form-control" id="notes" name="notes" required cols="3">{{investment.notes}}</textarea>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Record Investment</button>
+                    </div>
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>

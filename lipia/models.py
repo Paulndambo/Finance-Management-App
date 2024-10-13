@@ -1,5 +1,7 @@
 from django.db import models
 from core.models import AbstractBaseModel
+
+
 # Create your models here.
 class MpesaResponseBody(AbstractBaseModel):
     body = models.JSONField()
@@ -16,7 +18,7 @@ class MpesaTransaction(AbstractBaseModel):
 
     def __str__(self):
         return self.phone_number + " has paid " + str(self.amount)
-    
+
 
 BILL_NUMBER_TYPE_CHOICES = (
     ("till_number", "Till Number"),

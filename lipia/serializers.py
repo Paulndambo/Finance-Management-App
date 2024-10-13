@@ -1,6 +1,7 @@
 from .models import MpesaResponseBody, ServiceProvider, MpesaTransaction
 from rest_framework import serializers
 
+
 class MpesaResponseBodySerializer(serializers.ModelSerializer):
     class Meta:
         model = MpesaResponseBody

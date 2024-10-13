@@ -18,6 +18,7 @@
             </a>
             </div>
             <div class="col-md-6 mb-4">
+                <a href="{% url 'budgets' %}" style="text-decoration: none; color: black;">
                 <div class="balance-section d-flex justify-content-between align-items-center">
                     <div>
                         <h3>Overal Budget</h3>
@@ -27,10 +28,12 @@
                         <i class="fas fa-calculator fa-2x"></i>
                     </div>
                 </div>
+            </a>
             </div>
            
             <!-- Cards Section -->
-            <div class="col-md-3">
+            <div class="col-md-4">
+                <a href="{% url 'investments' %}" style="text-decoration: none; color: black;">
                 <div class="card p-3 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="icon-bg">
@@ -39,41 +42,28 @@
                         </div>
                         <div class="ms-3">
                             <h5>Investments</h5>
-                            <h4 class="text-highlight">${{income}}</h4>
+                            <h4 class="text-highlight">${{total_investments}}</h4>
                         </div>
                     </div>
                 </div>
+            </a>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card p-3 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="icon-bg bg-danger">
                             <i class="fas fa-credit-card fa-2x"></i>
                         </div>
                         <div class="ms-3">
-                            <h5>Expenses</h5>
+                            <h5>Expenditures</h5>
                             <h4 class="text-danger">${{total_spend}}</h4>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card p-3 mb-3">
-                    <div class="d-flex align-items-center">
-                        <div class="icon-bg bg-warning">
-                            <i class="fas fa-balance-scale fa-2x"></i>
-                        </div>
-                        <div class="ms-3">
-                            <h5>Budget Savings</h5>
-                            <h4 class="text-warning">$3,045</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <a href="{% url 'loans' %}" style="text-decoration: none; color: black;">
                 <div class="card p-3 mb-3">
                     <div class="d-flex align-items-center">

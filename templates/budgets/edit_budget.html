@@ -1,0 +1,52 @@
+<div class="modal fade" id="editBudgetModal{{budget.id}}" tabindex="-1" aria-labelledby="newTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newTransactionModalLabel">Edit {{budget.month}} Budget</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'edit-budget' %}">
+                    {% csrf_token %}
+                    <input type="number" id="budget_id" name="budget_id" value="{{budget.id}}" hidden readonly required />
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Month</label>
+                            <select class="form-select" name="month" id="month" required>
+                                <option value="{{budget.month}}">{{budget.month}}</option>
+                                {% for month in months %}
+                                    {% if month != budget.month %}
+                                        <option value="{{month}}">{{month}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Year</label>
+                            <select class="form-select" name="year" id="year" required>
+                                <option value="{{budget.year}}">{{budget.year}}</option>
+                                {% for year in years %}
+                                    {% if year != budget.year %}
+                                        <option value="{{year}}">{{year}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="col">
+                            <label for="transactionAmount" class="form-label fw-bold">Budget Allocation</label>
+                        <input type="number" name="amount_allocated" id="amount_allocated" min="0" value="{{budget.amount_allocated}}" class="form-control" id="transactionAmount">
+                        </div>
+                     
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Budget</button>
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>

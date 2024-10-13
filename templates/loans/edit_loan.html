@@ -1,0 +1,61 @@
+<div class="modal fade" id="editLoanModal{{loan.id}}" tabindex="-1" aria-labelledby="newTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newTransactionModalLabel">Edit Loan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'edit-loan' %}">
+                    {% csrf_token %}
+                    <input type="number" id="loan_id" name="loan_id" value="{{loan.id}}" hidden readonly required />
+                    <div class="row mb-2">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Given By/To</label>
+                            <input type="text" id="given_by" name="given_by" value="{{loan.given_by}}" required class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Amount Given</label>
+                            <input type="number" class="form-control" id="amount" name="amount" min="0" value="{{loan.amount}}" required />
+                        </div>
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Amount to Pay</label>
+                            <input type="number" class="form-control" id="amount_to_repay" name="amount_to_repay" value="{{loan.amount_to_repay}}" min="0" required />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Duration</label>
+                            <input type="number" class="form-control" id="duration" name="duration" value="{{loan.duration}}" min="0" required />
+                        </div>
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Installment Amount</label>
+                            <input type="number" class="form-control" id="installment" name="installment" value="{{loan.installment}}" min="0" required />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Loan Type</label>
+                            <select class="form-select" id="loan_type" name="loan_type" value="{{loan.loan_type}}">
+                                <option></option>
+                                <option value="Received">I Borrowed</option>
+                                <option value="Given Out">I Gave Out</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Due Date</label>
+                            <input type="date" class="form-control" id="date_due" name="date_due" value="{{loan.date_due}}" />
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit Loan</button>
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>

@@ -1,14 +1,13 @@
 from django.shortcuts import render
 from .serializers import (
     MpesaResponseBodySerializer,
-    ServiceProviderSerializer, 
+    ServiceProviderSerializer,
     MpesaTransactionSerializer,
-    LipaNaMpesaSerializer
+    LipaNaMpesaSerializer,
 )
 from .models import MpesaResponseBody, ServiceProvider, MpesaTransaction
 from .mpesa_metadata_transformer import mpesa_metadata_transformative_function
 from .utils import MpesaGateWay
-
 
 
 from rest_framework.viewsets import ModelViewSet
@@ -23,16 +22,23 @@ class MpesaViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         body = request.data["Body"]
-        
+
         if body:
             mpesa = MpesaResponseBody.objects.create(body=body)
-            transformed_mpesa_response = mpesa_metadata_transformative_function(body['stkCallback'])
+            transformed_mpesa_response = mpesa_metadata_transformative_function(
+                body["stkCallback"]
+            )
             serializer = MpesaTransactionSerializer(data=transformed_mpesa_response)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response({"failed": "Transaction Failed"}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"failed": "The Transaction has not send callback data"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"failed": "Transaction Failed"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        return Response(
+            {"failed": "The Transaction has not send callback data"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
 
 class ServiceProviderViewSet(ModelViewSet):
@@ -49,17 +55,18 @@ class LipaNaMpesaGenericAPIView(generics.CreateAPIView):
     serializer_class = LipaNaMpesaSerializer
 
     def post(self, request, *args, **kwargs):
-        data = request.data 
+        data = request.data
         serializer = self.serializer_class(data=data)
         if serializer.is_valid(raise_exception=True):
             cl = MpesaGateWay()
             cl.stk_push(
-                phone_number=data.get('phone_number'),
-                amount=int(data.get('amount')),
+                phone_number=data.get("phone_number"),
+                amount=int(data.get("amount")),
                 callback_url="https://perfin-backend.azurewebsites.net/lipia/lipa-na-mpesa/",
                 account_reference="Perfin Mpesa",
-                transaction_desc="This is perfin mpesa transaction"
+                transaction_desc="This is perfin mpesa transaction",
             )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response({"failed": "Payment Request Failed!!"}, status=status.HTTP_400_BAD_REQUEST)
-
+        return Response(
+            {"failed": "Payment Request Failed!!"}, status=status.HTTP_400_BAD_REQUEST
+        )

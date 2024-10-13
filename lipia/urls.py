@@ -1,16 +1,22 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
-    MpesaViewSet, 
-    ServiceProviderViewSet, 
+    MpesaViewSet,
+    ServiceProviderViewSet,
     MpesaTransactionViewSet,
-    LipaNaMpesaGenericAPIView
+    LipaNaMpesaGenericAPIView,
 )
 
 router = DefaultRouter()
-router.register("mpesa-callback-handler", MpesaViewSet, basename="mpesa-callback-handler")
-router.register("service-providers", ServiceProviderViewSet, basename="service-providers")
-router.register("mpesa-transactions",  MpesaTransactionViewSet, basename="mpesa-transactions")
+router.register(
+    "mpesa-callback-handler", MpesaViewSet, basename="mpesa-callback-handler"
+)
+router.register(
+    "service-providers", ServiceProviderViewSet, basename="service-providers"
+)
+router.register(
+    "mpesa-transactions", MpesaTransactionViewSet, basename="mpesa-transactions"
+)
 
 urlpatterns = [
     path("", include(router.urls)),

@@ -1,4 +1,4 @@
-<div class="modal fade" id="newAllocationModal" tabindex="-1" aria-labelledby="newTransactionModalLabel" aria-hidden="true">
+<div class="modal fade" id="newAllocationModal{{budget.id}}" tabindex="-1" aria-labelledby="newTransactionModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,29 +6,28 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="POST" action="{% url 'new-allocation' %}">
+                    {% csrf_token %}
+                    <input type="number" id="budget_id" name="budget_id" value="{{budget.id}}" hidden readonly required />
                     <div class="mb-3">
-                        <label for="transactionDescription" class="form-label">Description</label>
-                        <input type="text" class="form-control" id="transactionDescription">
+                        <label for="transactionAmount" class="form-label fw-bold">Amount Allocated</label>
+                        <input type="number" class="form-control" id="amount_allocated" name="amount_allocated" min="0" required>
                     </div>
+        
                     <div class="mb-3">
-                        <label for="transactionAmount" class="form-label">Amount</label>
-                        <input type="number" class="form-control" id="transactionAmount">
-                    </div>
-                    <div class="mb-3">
-                        <label for="transactionCategory" class="form-label">Category</label>
-                        <select class="form-select" id="transactionCategory">
-                            <option selected>Choose...</option>
-                            <option value="Income">Income</option>
-                            <option value="Expense">Expense</option>
-                            <option value="Savings">Savings</option>
+                        <label for="transactionCategory" class="form-label fw-bold">Allocation Category</label>
+                        <select class="form-select" id="allocation_type" name="allocation_type">
+                            <option></option>
+                            {% for allocation_type in allocation_types %}
+                                <option value="{{allocation_type}}">{{allocation_type}}</option>
+                            {% endfor %}
                         </select>
                     </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Budget</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save Allocation</button>
             </div>
         </div>
     </div>

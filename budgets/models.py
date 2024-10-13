@@ -1,5 +1,6 @@
 from django.db import models
 from core.models import AbstractBaseModel
+
 # Create your models here.
 MONTH_NAMES = (
     ("January", "January"),
@@ -22,35 +23,43 @@ ALLOCATION_CHOICES = (
     ("Food", "Food"),
     ("Commuting", "Commuting"),
     ("Family", "Family"),
-    ("Loan Repayments", "Loan Repayments"),
     ("Entertainment", "Entertainment"),
     ("Charity and Support", "Charity and Support"),
-    ("Investments", "Investments"),
-    ("Savings", "Savings"),
-    ("Personal Use", "Personal Use")
+    ("Personal Use", "Personal Use"),
 )
+
 
 class Budget(AbstractBaseModel):
     user = models.ForeignKey("users.User", on_delete=models.SET_NULL, null=True)
-    name = models.CharField(max_length=255)
-    income = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     amount_allocated = models.DecimalField(max_digits=100, decimal_places=2, default=0)
-    amount_spend = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     deficit = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     year = models.IntegerField()
     month = models.CharField(max_length=255, choices=MONTH_NAMES)
     active = models.BooleanField(default=True)
+
     def __str__(self):
         return self.name
+    
+    def amount_budgeted(self):
+        allocations = self.budgetallocations.all().values_list("amount_allocated", flat=True)
+        return sum(allocations)
+        
+    def amount_spend(self):
+        allocations = self.budgetexpenditures.all().values_list("amount", flat=True)
+        return sum(allocations)
 
 
 class BudgetAllocation(AbstractBaseModel):
-    user = models.ForeignKey("users.User", on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     allocation_type = models.CharField(max_length=255, choices=ALLOCATION_CHOICES, null=True)
+    budget = models.ForeignKey(Budget, on_delete=models.CASCADE, related_name="budgetallocations")
     category = models.ForeignKey("core.BudgetCategory", on_delete=models.SET_NULL, null=True)
-    budget = models.ForeignKey(Budget, on_delete=models.CASCADE)
     amount_allocated = models.DecimalField(max_digits=100, decimal_places=2)
-    amount_spend = models.DecimalField(max_digits=100, decimal_places=2, default=0)
+    #amount_spend = models.DecimalField(max_digits=100, decimal_places=2, default=0)
 
     def __str__(self):
-        return self.budget.name
+        return f"{self.budget.month} {self.budget.year} {self.allocation_type}"
+    
+    def amount_spend(self):
+        expenses = self.allocationexpenditures.all().values_list("amount", flat=True)
+        return sum(expenses)
