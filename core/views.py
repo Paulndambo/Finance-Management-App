@@ -34,6 +34,8 @@ def dashboard(request):
             .order_by("-created")
         )
     )
+    
+    expenditures = Expenditure.objects.filter(user=user).order_by("-created")[:5]
 
     context = {
         "income": income,
@@ -41,6 +43,7 @@ def dashboard(request):
         "total_spend": total_spend,
         "loans_total": loans_total,
         "total_investments": investments,
+        "expenditures": expenditures
     }
 
     return render(request, "dashboard.html", context)

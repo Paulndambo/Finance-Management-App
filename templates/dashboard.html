@@ -50,6 +50,7 @@
             </div>
 
             <div class="col-md-4">
+                <a href="{% url 'expenditures' %}" style="text-decoration: none; color: black;">
                 <div class="card p-3 mb-3">
                     <div class="d-flex align-items-center">
                         <div class="icon-bg bg-danger">
@@ -61,6 +62,7 @@
                         </div>
                     </div>
                 </div>
+            </a>
             </div>
 
             <div class="col-md-4">
@@ -84,6 +86,7 @@
                 <table class="table table-bordered mt-3">
                     <thead class="table-light">
                         <tr>
+                            <th>#</th>
                             <th>Date</th>
                             <th>Description</th>
                             <th>Category</th>
@@ -91,30 +94,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                    {% for spending in expenditures %}
                         <tr>
-                            <td>2024-10-01</td>
-                            <td>Grocery Shopping</td>
-                            <td>Food</td>
-                            <td class="text-danger">-$150</td>
+                            <th>{{spending.id}}</th>
+                            <td>{{spending.created}}</td>
+                            <td>{{spending.description}}</td>
+                            <td>{{spending.allocation}}</td>
+                            <td class="text-danger">-${{spending.amount}}</td>
                         </tr>
-                        <tr>
-                            <td>2024-10-02</td>
-                            <td>Salary</td>
-                            <td>Income</td>
-                            <td class="text-highlight">+$3,000</td>
-                        </tr>
-                        <tr>
-                            <td>2024-10-03</td>
-                            <td>Electricity Bill</td>
-                            <td>Bills</td>
-                            <td class="text-danger">-$80</td>
-                        </tr>
-                        <tr>
-                            <td>2024-10-04</td>
-                            <td>Freelance Project</td>
-                            <td>Income</td>
-                            <td class="text-highlight">+$1,200</td>
-                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

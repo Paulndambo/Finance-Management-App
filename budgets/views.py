@@ -85,6 +85,7 @@ def budget_details(request, id):
         "allocation_types": ALLOCATION_CHOICES,
         "total_spend": total_spend,
         "budget": budget,
+        "balance": total_budgeted - total_spend,
         "budget_categories": budget_categories
     }
     return render(request, "budgets/budget_details.html", context)
