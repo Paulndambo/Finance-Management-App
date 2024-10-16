@@ -25,15 +25,65 @@
       margin-bottom: 20px;
       text-align: center;
     }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .social-btn img {
+      width: 20px;
+    }
+    .social-container {
+      margin-bottom: 20px;
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #ddd;
+    }
+    .divider::before {
+      margin-right: 10px;
+    }
+    .divider::after {
+      margin-left: 10px;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Load socialaccount template tags -->
+  {% load socialaccount %}
+
   <div class="login-container">
     <h2 class="login-header">PERFIN LOGIN</h2>
+
+    <!-- Social Login Buttons -->
+    <div class="social-container">
+      <a href="{% provider_login_url 'google' %}" class="btn btn-light w-100 social-btn mb-2">
+        <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google"> Continue with Google
+      </a>
+     
+      <a href="{% provider_login_url 'github' %}" class="btn btn-dark w-100 social-btn mb-2">
+        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/github.png" alt="GitHub"> Continue with GitHub
+      </a>
+     
+    </div>
+
+    <!-- Divider -->
+    <div class="divider">OR</div>
+
+    <!-- Username/Password Login Form -->
     <form method="POST">
       {% csrf_token %}
       <div class="mb-3">
-        <label for="email" class="form-label">Username</label>
+        <label for="username" class="form-label">Username</label>
         <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
       </div>
       <div class="mb-3">
@@ -46,6 +96,8 @@
       </div>
       <button type="submit" class="btn btn-primary w-100">Login</button>
     </form>
+
+    <!-- Additional Links -->
     <div class="text-center mt-3">
       <a href="#">Forgot password?</a>
     </div>
