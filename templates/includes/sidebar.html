@@ -1,0 +1,30 @@
+<div class="sidebar-show-btn" style="display: none;">
+    <i class="fas fa-arrow-right"></i>
+</div>
+<div class="sidebar">
+    <h2>
+        <div class="sidebar-toggler">
+            FinanceApp <i class="fas fa-bars"></i>
+        </div>
+    </h2>
+    <a href="/"><i class="fas fa-chart-line"></i> Dashboard</a>
+        <a href="{% url 'income' %}"><i class="fas fa-money-bill-wave"></i> Income</a>
+        <a href="{% url 'budgets' %}"><i class="fas fa-file-invoice-dollar"></i> Budgets</a>
+        <a href="{% url 'expenditures' %}"><i class="fas fa-coins"></i> Expenditures</a>
+        <a href="{% url 'loans' %}"><i class="fas fa-hand-holding-usd"></i> Loans</a>
+        <a href="{% url 'investments' %}"><i class="fas fa-landmark"></i> Investments</a>
+        <a href="{% url 'invoices' %}"><i class="fas fa-file-invoice"></i> Invoices</a>
+        <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
+    <!--
+    <a href="#peopleSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fas fa-users"></i> People
+    </a>
+    <div class="collapse" id="peopleSubmenu">
+        <ul class="list-unstyled ps-3">
+            <li><a href="#"><i class="fas fa-user"></i> Users</a></li>
+            <li><a href="#"><i class="fas fa-user-friends"></i> Customers</a></li>
+        </ul>
+    </div>
+    -->
+    <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+</div>

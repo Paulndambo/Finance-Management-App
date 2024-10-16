@@ -8,7 +8,7 @@
             <div class="card p-3 mb-3">
                 <div class="d-flex align-items-center">
                     <div class="icon-bg bg-primary">
-                        <i class="fas fa-wallet fa-2x"></i>
+                        <i class="fa-solid fa-chart-pie fa-2x"></i>
                     </div>
                     <div class="ms-3">
                         <h5>Allocated</h5>
@@ -21,7 +21,7 @@
             <div class="card p-3 mb-3">
                 <div class="d-flex align-items-center">
                     <div class="icon-bg bg-primary">
-                        <i class="fas fa-coins fa-2x"></i>
+                        <i class="fa-solid fa-list-check fa-2x"></i>
                     </div>
                     <div class="ms-3">
                         <h5>Budgeted</h5>
@@ -35,7 +35,7 @@
             <div class="card p-3 mb-3">
                 <div class="d-flex align-items-center">
                     <div class="icon-bg bg-danger">
-                        <i class="fas fa-credit-card fa-2x"></i>
+                        <i class="fa-solid fa-money-bill-wave fa-2x"></i>
                     </div>
                     <div class="ms-3">
                         <h5>Spend</h5>
@@ -49,7 +49,7 @@
             <div class="card p-3 mb-3">
                 <div class="d-flex align-items-center">
                     <div class="icon-bg bg-warning">
-                        <i class="fas fa-chart-line fa-2x"></i>
+                        <i class="fa-solid fa-wallet fa-2x"></i>
                     </div>
                     <div class="ms-3">
                         <h5>Savings</h5>
@@ -61,16 +61,20 @@
 
         <!-- Recent Transactions -->
         <div class="col-md-12 recent-transactions mt-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <h4>Allocations</h4>
-                <!-- Search and Create Button -->
-                <div class="d-flex">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Allocations</h4>
+                </div>
+                <div class="col-md-4">
                     <input type="text" class="form-control me-2" placeholder="Search Allocations...">
+                </div>
+                <div class="col-md-4 text-end">
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newAllocationModal{{budget.id}}">
-                        New
+                        New Allocation
                     </button>
                 </div>
             </div>
+            
             <table class="table table-bordered mt-3">
                 <thead class="table-light">
                     <tr>

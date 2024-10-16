@@ -1,55 +1,66 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-3" style="height: 100vh;">
+<div class="container mt-3">
     <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="balance-section d-flex justify-content-between align-items-center">
-                <div>
-                    <h3>Total Allocated</h3>
-                    <h1 class="text-highlight">${{total_allocated}}</h1>
-                </div>
-                <div class="icon-bg">
-                    <i class="fas fa-calculator fa-2x"></i>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="balance-section d-flex justify-content-between align-items-center">
-                <div>
-                    <h3>Total Budgeted</h3>
-                    <h1 class="text-primary">${{total_budgeted}}</h1>
-                </div>
-                <div class="icon-bg">
-                    <i class="fas fa-coins fa-2x"></i>
+        <div class="col-md-4">
+            <div class="card p-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="icon-bg">
+                        <i class="fas fa-coins fa-2x"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h4>Total Allocated</h4>
+                        <h4 class="text-highlight">${{total_allocated}}</h4>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="balance-section d-flex justify-content-between align-items-center">
-                <div>
-                    <h3>Total Spend</h3>
-                    <h1 class="text-danger">${{total_spend}}</h1>
+        <div class="col-md-4">
+            <div class="card p-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="icon-bg">
+                        <i class="fa-solid fa-list-check fa-2x"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h4>Total Budgeted</h4>
+                        <h4 class="text-primary">${{total_budgeted}}</h4>
+                    </div>
                 </div>
-                <div class="icon-bg">
-                    <i class="fas fa-credit-card fa-2x"></i>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="icon-bg">
+                        <i class="fa-solid fa-money-bill-wave fa-2x"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h4>Total Spend</h4>
+                        <h4 class="text-danger">${{total_spend}}</h4>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
         <!-- Recent Transactions -->
+       
         <div class="col-md-12 recent-transactions mt-2">
-            <div class="d-flex justify-content-between align-items-center">
-                <h4>Budgets</h4>
-                <!-- Search and Create Button -->
-                <div class="d-flex">
-                    <input type="text" class="form-control me-2" placeholder="Search transactions...">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Budgets</h4>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control me-2" placeholder="Search Budget...">
+                </div>
+                <div class="col-md-4 text-end">
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newBudgetModal">
-                        New
+                        New Budget
                     </button>
                 </div>
-            </div>
+             </div>
             <table class="table table-bordered mt-3">
                 <thead class="table-light">
                     <tr>
@@ -82,15 +93,17 @@
                         </td>
                         <td>
                             {% if budget.active %}
-                                <a data-bs-toggle="modal" data-bs-target="#deleteBudgetModal{{budget.id}}" class="btn btn-warning btn-sm"><i class="bi bi-lock"></i></a>
+                                <a data-bs-toggle="modal" data-bs-target="#lockBudgetModal{{budget.id}}" class="btn btn-warning btn-sm"><i class="bi bi-lock"></i></a>
                             {% else %}
-                            <a data-bs-toggle="modal" data-bs-target="#deleteBudgetModal{{budget.id}}" class="btn btn-warning btn-sm"><i class="bi bi-unlock"></i></a>
+                            <a data-bs-toggle="modal" data-bs-target="#unlockBudgetModal{{budget.id}}" class="btn btn-success btn-sm"><i class="bi bi-unlock"></i></a>
                             {% endif %}
                         </td>
                     </tr>
                     
                     {% include "budgets/edit_budget.html" %}
                     {% include "budgets/delete_budget.html" %}
+                    {% include "budgets/lock_budget.html" %}
+                    {% include "budgets/unlock_budget.html" %}
                     {% endfor %}
                 </tbody>
             </table>

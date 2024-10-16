@@ -121,29 +121,35 @@
         .table-responsive {
             overflow-x: auto;
         }
+        .sidebar-show-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: #343a40;
+        color: white;
+        padding: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 1000;
+    }
+    .sidebar-show-btn i {
+        font-size: 1.5rem;
+    }
     </style>
 </head>
 <body>
-
-    <!-- Sidebar Toggler for Mobile/Desktop -->
-    
-
-    <!-- Sidebar -->
-    
+    <div class="sidebar-show-btn" style="display: none;">
+        <i class="fas fa-arrow-right"></i>
+    </div>
     <div class="sidebar">
-        <h2> <span>
+        <h2>
             <div class="sidebar-toggler">
                 FinanceApp <i class="fas fa-bars"></i>
             </div>
-        </span></h2>
-        
+        </h2>
         <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-        
         <a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a>
-        
         <a href="#"><i class="fas fa-wallet"></i> Accounts</a>
-        
-        <!-- Collapsible People Section -->
         <a href="#peopleSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             <i class="fas fa-users"></i> People
         </a>
@@ -153,11 +159,8 @@
                 <li><a href="#"><i class="fas fa-user-friends"></i> Customers</a></li>
             </ul>
         </div>
-        
         <a href="#"><i class="fas fa-user"></i> Profile</a>
     </div>
-    
-
     <!-- Dashboard Content -->
     <div class="content">
         <div class="container mt-5">
@@ -324,10 +327,27 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Sidebar toggle functionality
-        document.querySelector('.sidebar-toggler').addEventListener('click', function() {
-            document.body.classList.toggle('sidebar-hidden');
+        const sidebarToggler = document.querySelector('.sidebar-toggler');
+        const sidebarShowBtn = document.querySelector('.sidebar-show-btn');
+        const body = document.body;
+    
+        sidebarToggler.addEventListener('click', function() {
+            body.classList.toggle('sidebar-hidden');
+            toggleSidebarButton();
         });
+    
+        sidebarShowBtn.addEventListener('click', function() {
+            body.classList.remove('sidebar-hidden');
+            toggleSidebarButton();
+        });
+    
+        function toggleSidebarButton() {
+            if (body.classList.contains('sidebar-hidden')) {
+                sidebarShowBtn.style.display = 'block';
+            } else {
+                sidebarShowBtn.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>

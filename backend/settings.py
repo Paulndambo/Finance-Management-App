@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     "budgets",
     "finances",
     "loans",
+    "invoices",
+    "integrations",
 ]
 
 MIDDLEWARE = [

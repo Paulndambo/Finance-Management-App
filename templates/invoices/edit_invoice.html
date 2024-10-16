@@ -1,0 +1,66 @@
+<div class="modal fade" id="editInvoiceModal{{invoice.id}}" tabindex="-1" aria-labelledby="newTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newTransactionModalLabel">Edit Invoice</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'edit-invoice' %}">
+                    {% csrf_token %}
+                    <input type="number" id="invoice_id" name="invoice_id" value="{{invoice.id}}" hidden readonly required />
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Client Name</label>
+                            <input type="text" id="client_name" name="client_name" value="{{invoice.client_name}}" required class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Client Email</label>
+                            <input type="email" id="client_email" name="client_email" value="{{invoice.client_email}}" required class="form-control" />
+                        </div>
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Client Phone</label>
+                            <input type="text" id="client_phone" name="client_phone" value="{{invoice.client_phone}}" required class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Client Address</label>
+                            <input type="text" id="client_address" name="client_address" value="{{invoice.client_address}}" required class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                      <div class="col">
+                          <label for="transactionDescription" class="form-label fw-bold">Invoice Date</label>
+                          <input type="date" id="invoice_date" name="invoice_date" value="{{invoice.invoice_date}}" class="form-control" />
+                      </div>
+                      <div class="col">
+                          <label for="transactionDescription" class="form-label fw-bold">Due Date</label>
+                          <input type="date" id="due_date" name="due_date" value="{{invoice.due_date}}" class="form-control" />
+                      </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col">
+                        <label for="transactionDescription" class="form-label fw-bold">Invoice Status</label>
+                        <select class="form-select" id="status" name="status">
+                            <option value="{{invoice.status}}">{{invoice.status}}</option>
+                            {% for status in invoice_statuses %}
+                                {% if status != invoice.status %}
+                                    <option value="{{status}}">{{status}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit Invoice</button>
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+  </div>

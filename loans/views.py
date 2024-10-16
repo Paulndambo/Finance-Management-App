@@ -9,7 +9,7 @@ from loans.models import Loan, LoanRepayment
 
 # Create your views here.
 payment_methods = ["Cash", "Card", "Cheque", "Bank Transfer", "Mpesa", "Other"]
-
+loan_types = ["Received", "Given Out"]
 
 @login_required(login_url="/users/login")
 def loans(request):
@@ -64,6 +64,7 @@ def loans(request):
         "total_repaid": total_repaid if total_repaid else 0,
         "amount_owing": total_borrowed - borrowed_loans_repaid,
         "amount_owed": total_given - given_loans_repaid,
+        "loan_types": loan_types,
     }
     return render(request, "loans/loans.html", context)
 
