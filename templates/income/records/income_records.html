@@ -6,16 +6,20 @@
         <!-- Cards Section -->
         <!-- Recent Transactions -->
         <div class="col-md-12 recent-transactions mt-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <h4>{{income.month}} {{income.year}} Income Records</h4>
-                <!-- Search and Create Button -->
-                <div class="d-flex">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>{{income.month}} {{income.year}} Income Records</h4>
+                </div>
+                <div class="col-md-3">
                     <input type="text" class="form-control me-2" placeholder="Search Allocations...">
+                </div>
+                <div class="col-md-3 text-end">
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newIncomeRecordModal">
-                        New
+                        Record Income
                     </button>
                 </div>
             </div>
+         
             <table class="table table-bordered mt-3">
                 <thead class="table-light">
                     <tr>

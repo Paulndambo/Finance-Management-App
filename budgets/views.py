@@ -70,7 +70,7 @@ def budget_details(request, id):
     
     total_spend = sum(list(Expenditure.objects.filter(user=request.user, budget=budget).values_list("amount", flat=True)))
     
-    total_budgeted = allocations.aggregate(total_budgeted=Sum('amount_allocated'))["total_budgeted"]
+    total_budgeted = sum(list(BudgetAllocation.objects.filter(user=request.user, budget=budget).values_list("amount_allocated", flat=True)))
     
     budget_categories = BudgetCategory.objects.all()
 
@@ -125,6 +125,28 @@ def delete_budget(request):
         budget.delete()
         return redirect("budgets")
     return render(request, "budgets/delete_budget.html")
+
+
+@login_required(login_url="/users/login")
+def lock_budget(request):
+    if request.method == "POST":
+        id = request.POST.get("budget_id")
+        budget = Budget.objects.get(id=id)
+        budget.active = False
+        budget.save()
+        return redirect("budgets")
+    return render(request, "budgets/lock_budget.html")
+
+
+@login_required(login_url="/users/login")
+def unlock_budget(request):
+    if request.method == "POST":
+        id = request.POST.get("budget_id")
+        budget = Budget.objects.get(id=id)
+        budget.active = True
+        budget.save()
+        return redirect("budgets")
+    return render(request, "budgets/unlock_budget.html")
 
 
 @login_required(login_url="/users/login")
