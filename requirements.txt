@@ -5,3 +5,4 @@ gunicorn
 whitenoise
 drf_yasg
 djangorestframework-simplejwt
+django-allauth
