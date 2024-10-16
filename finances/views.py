@@ -250,11 +250,11 @@ def new_expenditure(request):
 def edit_expenditure(request):
     if request.method == "POST":
         expenditure = Expenditure.objects.get(id=request.POST.get("expenditure_id"))
-        expenditure.month = request.POST.get("month")
-        expenditure.year = int(request.POST.get("year"))
+        allocation = BudgetAllocation.objects.get(id=request.POST.get("allocation_id"))
         expenditure.amount = request.POST.get("amount")
-        expenditure.expenditure_type = request.POST.get("expenditure_type")
-        expenditure.notes = request.POST.get("notes")
+        expenditure.description = request.POST.get("description")
+        expenditure.allocation = allocation
+        expenditure.budget = allocation.budget
         expenditure.save()
         return redirect("expenditures")
     return render(request, "expenditures/edit_expenditure.html")

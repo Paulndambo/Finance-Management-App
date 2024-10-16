@@ -42,6 +42,9 @@
                         <td>{{invoice.due_date}}</td>
                         <td>{{invoice.status}}</td>
                         <td>
+                            <a href="{% url 'invoice-details' invoice.id %}" class="btn btn-info btn-sm"><i class="fa-regular fa-eye"></i></a>
+                        </td>
+                        <td>
                             <a data-bs-toggle="modal" data-bs-target="#editInvoiceModal{{invoice.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
                         </td>
                         <td>

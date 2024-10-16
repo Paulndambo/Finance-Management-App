@@ -5,16 +5,20 @@
     <div class="row">
         <!-- Recent Transactions -->
         <div class="col-md-12 recent-transactions mt-2">
-            <div class="d-flex justify-content-between align-items-center">
-                <h4>Expenditures</h4>
-                <!-- Search and Create Button -->
-                <div class="d-flex">
-                    <input type="text" class="form-control me-2" placeholder="Search transactions...">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Expenditures</h4>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control me-2" placeholder="Search Expenditures...">
+                </div>
+                <div class="col-md-4 text-end">
                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newExpenditureModal">
-                        New
+                        Record Expenditure
                     </button>
                 </div>
             </div>
+            
             <table class="table table-bordered mt-3">
                 <thead class="table-light">
                     <tr>
@@ -22,7 +26,7 @@
                         <th scope="">Description</th>
                         <th scope="">Budget Allocation</th>
                         <th scope="">Amount</th>
-                        <th colspan="4"></th>
+                        <th colspan="2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,17 +37,14 @@
                         <td>{{expenditure.allocation}}</td>
                         <td>{{expenditure.amount}}</td>
                         <td>
-                            <a href="#" class="btn btn-info btn-sm"><i class="fa-regular fa-eye"></i></a>
-                        </td>
-                        <td>
                             <a data-bs-toggle="modal" data-bs-target="#editExpenditureModal{{expenditure.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
                         </td>
                         <td>
                             <a data-bs-toggle="modal" data-bs-target="#deleteExpenditureModal{{expenditure.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                         </td>
-                       
+                       {% include "expenditures/delete_expenditure.html" %}
+                       {% include "expenditures/edit_expenditure.html" %}
                     </tr>
-                
                     {% endfor %}
                 </tbody>
             </table>

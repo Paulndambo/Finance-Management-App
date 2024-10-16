@@ -13,9 +13,9 @@
         <a href="{% url 'expenditures' %}"><i class="fas fa-coins"></i> Expenditures</a>
         <a href="{% url 'loans' %}"><i class="fas fa-hand-holding-usd"></i> Loans</a>
         <a href="{% url 'investments' %}"><i class="fas fa-landmark"></i> Investments</a>
-        <a href="{% url 'invoices' %}"><i class="fas fa-landmark"></i> Invoices</a>
+        <a href="{% url 'invoices' %}"><i class="fas fa-file-invoice"></i> Invoices</a>
         <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
-
+    <!--
     <a href="#peopleSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fas fa-users"></i> People
     </a>
@@ -25,5 +25,6 @@
             <li><a href="#"><i class="fas fa-user-friends"></i> Customers</a></li>
         </ul>
     </div>
-    <a href="#"><i class="fas fa-user"></i> Profile</a>
+    -->
+    <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
 </div>

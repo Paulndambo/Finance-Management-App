@@ -39,9 +39,12 @@
                         <div class="col">
                             <label for="transactionDescription" class="form-label fw-bold">Loan Type</label>
                             <select class="form-select" id="loan_type" name="loan_type" value="{{loan.loan_type}}">
-                                <option></option>
-                                <option value="Received">I Borrowed</option>
-                                <option value="Given Out">I Gave Out</option>
+                                <option value="{{loan.loan_type}}">{{loan.loan_type}}</option>
+                                {% for loan_type in loan_types %}
+                                    {% if loan_type != loan.loan_type %}
+                                        <option value="{{loan_type}}">{{loan_type}}</option>
+                                    {% endif %}
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="col">

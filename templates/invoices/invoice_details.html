@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="invoice-header text-center">
+    <h1>Invoice</h1>
+    <p>{{request.user.name}}</p>
+    <p>{{request.user.address}}, {{request.user.city}}, {{request.user.country}}</p>
+    <p>Email: {{request.user.email}} | Phone: {{request.user.phone_number}}</p>
+  </div>
+
+  <!-- Invoice and Client Details -->
+  <div class="row invoice-details">
+    <div class="col-sm-6">
+      <h5>Invoice To:</h5>
+      <p><strong>{{invoice.client_name}}</strong></p>
+      <p>{{invoice.client_address}}</p>
+      <p>Email: {{invoice.client_email}}</p>
+      <p>Phone: {{invoice.client_phone}}</p>
+    </div>
+    <div class="col-sm-6 text-end">
+      <h5>Invoice Details:</h5>
+      <p><strong>Invoice Number:</strong> {{invoice.invoice_number}}</p>
+      <p><strong>Date:</strong> {{invoice.invoice_date}}</p>
+      <p><strong>Due Date:</strong> {{invoice.due_date}}</p>
+    </div>
+  </div>
+
+  <!-- Table of Items/Services -->
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>#</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Service/Product 1</td>
+        <td>2</td>
+        <td>$50.00</td>
+        <td>$100.00</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Service/Product 2</td>
+        <td>1</td>
+        <td>$75.00</td>
+        <td>$75.00</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Service/Product 3</td>
+        <td>5</td>
+        <td>$20.00</td>
+        <td>$100.00</td>
+      </tr>
+      <!-- Total row -->
+      <tr class="total-row">
+        <td colspan="4" class="text-end">Subtotal</td>
+        <td>$275.00</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="4" class="text-end">Tax (10%)</td>
+        <td>$27.50</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="4" class="text-end">Total</td>
+        <td>$302.50</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Payment Information -->
+  <div class="row">
+    <div class="col-sm-6">
+      <p><strong>Payment Methods:</strong></p>
+      <p>Bank Transfer: Account Number - 12345678</p>
+      <p>PayPal: paypal@company.com</p>
+    </div>
+    <div class="col-sm-6 text-end">
+      <p><strong>Thank you for your business!</strong></p>
+    </div>
+  </div>
+{% endblock content %}
