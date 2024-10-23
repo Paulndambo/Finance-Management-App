@@ -36,4 +36,5 @@ urlpatterns = [
     path("loans/", include("loans.urls")),
     path("invoices/", include("invoices.urls")),
     path('accounts/', include('allauth.urls')),
+    path("lipia/", include("lipia.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

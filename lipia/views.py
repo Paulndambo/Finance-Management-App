@@ -4,6 +4,7 @@ from .serializers import (
     ServiceProviderSerializer,
     MpesaTransactionSerializer,
     LipaNaMpesaSerializer,
+    C2BConfirmationSerializer
 )
 from .models import MpesaResponseBody, ServiceProvider, MpesaTransaction
 from .mpesa_metadata_transformer import mpesa_metadata_transformative_function
@@ -62,7 +63,7 @@ class LipaNaMpesaGenericAPIView(generics.CreateAPIView):
             cl.stk_push(
                 phone_number=data.get("phone_number"),
                 amount=int(data.get("amount")),
-                callback_url="https://perfin-backend.azurewebsites.net/lipia/lipa-na-mpesa/",
+                callback_url="https://sunny-morally-lacewing.ngrok-free.app/lipia/mpesa-callback/",
                 account_reference="Perfin Mpesa",
                 transaction_desc="This is perfin mpesa transaction",
             )
@@ -70,3 +71,17 @@ class LipaNaMpesaGenericAPIView(generics.CreateAPIView):
         return Response(
             {"failed": "Payment Request Failed!!"}, status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class C2BConfirmationAPIView(generics.CreateAPIView):
+    serializer_class = C2BConfirmationSerializer
+    
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        serializer = self.serializer_class(data=data)
+        
+        print(data)
+        
+       
+        return Response(data, status=status.HTTP_201_CREATED)
+        

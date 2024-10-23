@@ -5,15 +5,12 @@ from .views import (
     ServiceProviderViewSet,
     MpesaTransactionViewSet,
     LipaNaMpesaGenericAPIView,
+    C2BConfirmationAPIView
 )
 
 router = DefaultRouter()
-router.register(
-    "mpesa-callback-handler", MpesaViewSet, basename="mpesa-callback-handler"
-)
-router.register(
-    "service-providers", ServiceProviderViewSet, basename="service-providers"
-)
+router.register("mpesa-callback", MpesaViewSet, basename="mpesa-callback")
+router.register("service-providers", ServiceProviderViewSet, basename="service-providers")
 router.register(
     "mpesa-transactions", MpesaTransactionViewSet, basename="mpesa-transactions"
 )
@@ -21,4 +18,5 @@ router.register(
 urlpatterns = [
     path("", include(router.urls)),
     path("lipa-na-mpesa/", LipaNaMpesaGenericAPIView.as_view(), name="lipa-na-mpesa"),
+    path("c2b-confirm/", C2BConfirmationAPIView.as_view(), name="c2b-confirm"),
 ]
