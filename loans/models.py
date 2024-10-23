@@ -1,7 +1,10 @@
+from django.utils import timezone
 from django.db import models
 
 from core.models import AbstractBaseModel
 
+
+date_today = timezone.now
 # Create your models here.
 LOAN_TYPES = (
     ("Given Out", "Given Out"),
@@ -38,14 +41,11 @@ class Loan(AbstractBaseModel):
 
 
 class LoanRepayment(AbstractBaseModel):
-    user = models.ForeignKey(
-        "users.User", on_delete=models.CASCADE, related_name="loanrepayments"
-    )
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="loanrepayments")
     loan = models.ForeignKey(Loan, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_method = models.CharField(
-        max_length=255, choices=PAYMENT_METHODS, default="Mpesa"
-    )
+    payment_method = models.CharField(max_length=255, choices=PAYMENT_METHODS, default="Mpesa")
+    date_paid = models.DateField(default=date_today)
 
     def __str__(self):
         return self.loan.user.username

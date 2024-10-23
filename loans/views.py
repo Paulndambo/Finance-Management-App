@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from decimal import Decimal
 from django.shortcuts import render, redirect
 from django.db import transaction
@@ -11,6 +13,7 @@ from loans.models import Loan, LoanRepayment
 payment_methods = ["Cash", "Card", "Cheque", "Bank Transfer", "Mpesa", "Other"]
 loan_types = ["Received", "Given Out"]
 
+date_today = datetime.now().date()
 @login_required(login_url="/users/login")
 def loans(request):
     user = request.user
@@ -150,6 +153,7 @@ def make_loan_payment(request):
     if request.method == "POST":
         loan_id = request.POST.get("loan_id")
         amount_paid = Decimal(request.POST.get("amount_paid"))
+        date_paid = request.POST.get("date_paid")
 
         loan = Loan.objects.get(id=loan_id)
         loan.amount_paid += amount_paid
@@ -160,6 +164,7 @@ def make_loan_payment(request):
             loan=loan,
             user=request.user,
             payment_method=request.POST.get("payment_method"),
+            date_paid=date_paid if date_paid else date_today,
         )
 
         return redirect(f"/loans/{loan_id}/details")

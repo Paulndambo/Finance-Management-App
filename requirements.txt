@@ -7,3 +7,5 @@ drf_yasg
 djangorestframework-simplejwt
 django-allauth
 requests
+cryptography
+pyjwt

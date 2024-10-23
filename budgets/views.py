@@ -34,6 +34,7 @@ ALLOCATION_CHOICES = [
     "Food", "Commuting",
     "Family", "Loan Repayments",
     "Entertainment", "Charity and Support", "Personal Use",
+    "Utilities",
 ]
 
 
