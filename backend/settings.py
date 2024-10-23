@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "loans",
     "invoices",
     "integrations",
+    "lipia",
 ]
 
 MIDDLEWARE = [
@@ -160,6 +161,7 @@ REST_FRAMEWORK = {
 
 CSRF_TRUSTED_ORIGINS = [
     "https://personal-finance-backend-33b0.onrender.com",
+    "https://sunny-morally-lacewing.ngrok-free.app"
 ]
 
 
@@ -198,9 +200,10 @@ SIMPLE_JWT = {
 
 
 MPESA_ENVIRONMENT = "sandbox"
-MPESA_CONSUMER_KEY = "SuRXlrlXPHcqCAvqWnqWO4zQ4rQ6ImHT"
-MPESA_CONSUMER_SECRET = "UyIH5o7OWTO4TV5R"
+MPESA_CONSUMER_KEY = "b0rDIAymbVQa0wM8m1IDmqQZ4AeVaQIEBDeAyYRqFpOuHzeQ"
+MPESA_CONSUMER_SECRET = "nT9HygFAva4R60ThO55PwJMspyicEQZU2dWYHi8scFZlIJAMcTo2zqPSdRZanOXq"
 MPESA_SHORTCODE = "174379"
 MPESA_EXPRESS_SHORTCODE = "174379"
 MPESA_SHORTCODE_TYPE = "paybill"
 MPESA_PASSKEY = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+

@@ -49,7 +49,7 @@ class MpesaPaymentProcessingMixin(object):
             "PartyB": 174379,
             "PhoneNumber": 254745491093,
             "CallBackURL": "https://cd66-105-160-122-64.eu.ngrok.io/lipia/lipa-na-mpesa/",
-            "AccountReference": "DaboPay",
+            "AccountReference": "Personal Finance App",
             "TransactionDesc": "Payment of X",
         }
         token = self.__authenticate_to_mpesa()
