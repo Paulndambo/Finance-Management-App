@@ -15,16 +15,16 @@
         <a href="{% url 'investments' %}"><i class="fas fa-landmark"></i> Investments</a>
         <a href="{% url 'invoices' %}"><i class="fas fa-file-invoice"></i> Invoices</a>
         <a href="#"><i class="fas fa-user-circle"></i> Profile</a>
-    <!--
-    <a href="#peopleSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-        <i class="fas fa-users"></i> People
+    
+    <a href="#paymentsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fas fa-wallet"></i> Payments
     </a>
-    <div class="collapse" id="peopleSubmenu">
+    <div class="collapse" id="paymentsSubmenu">
         <ul class="list-unstyled ps-3">
-            <li><a href="#"><i class="fas fa-user"></i> Users</a></li>
-            <li><a href="#"><i class="fas fa-user-friends"></i> Customers</a></li>
+            <li><a href="{% url 'payment-requests' %}"><i class="fas fa-handshake"></i> Requests</a></li>
+            <li><a href="#"><i class="fas fa-hand-holding-usd"></i> Payouts</a></li>
         </ul>
     </div>
-    -->
+    
     <a href="{% url 'logout' %}"><i class="fas fa-user"></i> Logout</a>
 </div>
