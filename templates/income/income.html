@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "base1.html" %}
 
 {% block content %}
-<div class="container mt-3">
+
     <div class="row">
         <!-- Cards Section -->
         <!-- Recent Transactions -->
@@ -20,6 +20,7 @@
                 </div>
             </div>
            
+           <div class="table-responsive">
             <table class="table table-bordered mt-3">
                 <thead class="table-light">
                     <tr>
@@ -52,6 +53,7 @@
                    {% endfor %}
                 </tbody>
             </table>
+           </div>
             <div>
                 <nav aria-label="Page navigation example">
                   <ul class="pagination justify-content-end">
@@ -67,5 +69,5 @@
               </div>
         </div>
     </div>
-</div>
+
 {% endblock content %}

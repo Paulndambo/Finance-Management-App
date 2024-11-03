@@ -1,0 +1,158 @@
+{% extends "base1.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-2">
+        <h2>Dashboard</h2>
+    </div>
+    <div class="col-md-10">
+        <div class="d-flex justify-content-end">
+            <div class="time-period-controls">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-primary active" data-period="overall">Overall</button>
+                    <button type="button" class="btn btn-outline-primary" data-period="monthly">Monthly</button>
+                    <button type="button" class="btn btn-outline-primary" data-period="weekly">Weekly</button>
+                </div>
+                
+                <div class="month-picker-container">
+                    <select class="form-select" id="monthPicker">
+                        <option value="1">January 2024</option>
+                        <option value="2">February 2024</option>
+                        <option value="3">March 2024</option>
+                        <option value="4">April 2024</option>
+                        <option value="5">May 2024</option>
+                        <option value="6">June 2024</option>
+                        <option value="7">July 2024</option>
+                        <option value="8">August 2024</option>
+                        <option value="9">September 2024</option>
+                        <option value="10">October 2024</option>
+                        <option value="11">November 2024</option>
+                        <option value="12">December 2024</option>
+                    </select>
+                </div>
+                
+                <div class="date-picker-container">
+                    <input type="text" class="form-control" id="dateRangePicker" placeholder="Select date range">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-lg-4">
+        <div class="card stat-card bg-primary text-white">
+            <div class="card-body">
+                <h6><i class="fas fa-money-bill-wave"></i> Income</h6>
+                <h3>$5,240</h3>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card stat-card bg-success text-white">
+            <div class="card-body">
+                <h6><i class="fas fa-chart-line"></i> Investments</h6>
+                <h3>$12,580</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card stat-card bg-info text-white">
+            <div class="card-body">
+                <h6><i class="fas fa-piggy-bank"></i> Savings</h6>
+                <h3>$3,850</h3>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card stat-card bg-warning text-white">
+            <div class="card-body">
+                <h6><i class="fas fa-chart-pie"></i> Budget</h6>
+                <h3>$2,420</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <div class="card stat-card bg-danger text-white">
+            <div class="card-body">
+                <h6><i class="fas fa-receipt"></i> Expenses</h6>
+                <h3>$1,650</h3>
+               
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+        <a href="" style="text-decoration: none;">
+        <div class="card stat-card bg-secondary text-white">
+            <div class="card-body">
+                <h6><i class="fas fa-hand-holding-usd"></i> Loans</h6>
+                <h3>$8,900</h3>
+            </div>
+        </div>
+    </a>
+    </div>
+</div>
+
+<!-- Recent Transactions Table -->
+<div class="card">
+    <div class="card-header bg-white">
+        <h5 class="mb-0">Recent Transactions</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Oct 28, 2024</td>
+                        <td>Grocery Shopping</td>
+                        <td><span class="badge bg-primary">Food</span></td>
+                        <td class="text-danger">-$120.50</td>
+                        <td><span class="badge bg-success">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td>Oct 27, 2024</td>
+                        <td>Netflix Subscription</td>
+                        <td><span class="badge bg-info">Entertainment</span></td>
+                        <td class="text-danger">-$14.99</td>
+                        <td><span class="badge bg-success">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td>Oct 27, 2024</td>
+                        <td>Salary Deposit</td>
+                        <td><span class="badge bg-success">Income</span></td>
+                        <td class="text-success">+$3,500.00</td>
+                        <td><span class="badge bg-success">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td>Oct 26, 2024</td>
+                        <td>Electric Bill</td>
+                        <td><span class="badge bg-warning">Utilities</span></td>
+                        <td class="text-danger">-$85.20</td>
+                        <td><span class="badge bg-success">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td>Oct 25, 2024</td>
+                        <td>Restaurant</td>
+                        <td><span class="badge bg-primary">Food</span></td>
+                        <td class="text-danger">-$45.80</td>
+                        <td><span class="badge bg-success">Completed</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

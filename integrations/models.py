@@ -17,3 +17,9 @@ class ChimmoneyPaymentRequest(AbstractBaseModel):
     
     def __str__(self):
         return self.user.username
+    
+    
+class ChimmoneyPayout(AbstractBaseModel):
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    payment_reference = models.CharField(max_length=255, null=True)
+    
