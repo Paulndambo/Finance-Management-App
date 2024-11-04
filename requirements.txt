@@ -5,7 +5,8 @@ gunicorn
 whitenoise
 drf_yasg
 djangorestframework-simplejwt
-django-allauth
+#django-allauth
+django-allauth[socialaccount]
 requests
 cryptography
 pyjwt
