@@ -8,7 +8,7 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-6">
-                    <h4>{{income.month}} {{income.year}} Income Records</h4>
+                    <h4 class="px-2">{{income.month}} {{income.year}} Income Records</h4>
                 </div>
                 <div class="col-md-3">
                     <input type="text" class="form-control me-2" placeholder="Search Allocations...">
@@ -20,41 +20,43 @@
                 </div>
             </div>
          
-            <table class="table table-bordered mt-3">
-                <thead class="table-light">
-                    <tr>
-                        <th>#</th>
-                        <th>Created On</th>
-                        <th>Received From</th>
-                        <th>Source</th>
-                        <th>Payment Method</th>
-                        <th>Month</th>
-                        <th>Total Income</th>
-                        <th colspan="2"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for income_record in page_obj %}
-                    <tr>
-                        <td>{{income_record.id}}</td>
-                        <td>{{income_record.created.date}}</td>
-                        <td>{{income_record.received_from}}</td>
-                        <td>{{income_record.source}}</td>
-                        <td>{{income_record.payment_method}}</td>
-                        <td>{{income_record.income.month}} {{income_record.income.year}}</td>
-                        <td>{{income_record.amount}}</td>
-                        <td>
-                            <a data-bs-toggle="modal" data-bs-target="#editIncomeRecordModal{{income_record.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
-                        </td>
-                        <td>
-                            <a data-bs-toggle="modal" data-bs-target="#deleteIncomeRecordModal{{income_record.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
-                        </td>
-                        {% include "income/records/edit_income_record.html" %}
-                        {% include "income/records/delete_income_record.html" %}
-                    </tr>
-                   {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-sm mt-3">
+                    <thead class="">
+                        <tr>
+                            <th>#</th>
+                            <th>Created On</th>
+                            <th>Received From</th>
+                            <th>Source</th>
+                            <th>Payment Method</th>
+                            <th>Month</th>
+                            <th>Total Income</th>
+                            <th colspan="2"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for income_record in page_obj %}
+                        <tr>
+                            <td>{{income_record.id}}</td>
+                            <td>{{income_record.created.date}}</td>
+                            <td>{{income_record.received_from}}</td>
+                            <td>{{income_record.source}}</td>
+                            <td>{{income_record.payment_method}}</td>
+                            <td>{{income_record.income.month}} {{income_record.income.year}}</td>
+                            <td>{{income_record.amount}}</td>
+                            <td>
+                                <a data-bs-toggle="modal" data-bs-target="#editIncomeRecordModal{{income_record.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                            </td>
+                            <td>
+                                <a data-bs-toggle="modal" data-bs-target="#deleteIncomeRecordModal{{income_record.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                            </td>
+                            {% include "income/records/edit_income_record.html" %}
+                            {% include "income/records/delete_income_record.html" %}
+                        </tr>
+                       {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             <div>
                 <nav aria-label="Page navigation example">
                   <ul class="pagination justify-content-end">

@@ -1,81 +1,82 @@
 {% extends "base1.html" %}
 
 {% block content %}
-    <div class="row">
-        <!-- Cards Section -->
-        <div class="col-md-3">
-            <div class="card p-3 mb-3">
-                <div class="d-flex align-items-center">
-                    <div class="icon-bg bg-primary">
-                        <i class="fa-solid fa-chart-pie fa-2x"></i>
-                    </div>
-                    <div class="ms-3">
-                        <h5>Allocated</h5>
-                        <h4 class="text-success">${{allocated}}</h4>
-                    </div>
+<div class="row">
+    <!-- Cards Section -->
+    <div class="col-md-3">
+        <div class="card p-3 mb-3">
+            <div class="d-flex align-items-center">
+                <div class="icon-bg bg-primary">
+                    <i class="fa-solid fa-chart-pie fa-2x"></i>
+                </div>
+                <div class="ms-3">
+                    <h5>Allocated</h5>
+                    <h4 class="text-success">${{allocated}}</h4>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card p-3 mb-3">
-                <div class="d-flex align-items-center">
-                    <div class="icon-bg bg-primary">
-                        <i class="fa-solid fa-list-check fa-2x"></i>
-                    </div>
-                    <div class="ms-3">
-                        <h5>Budgeted</h5>
-                        <h4 class="text-primary">${{budgeted}}</h4>
-                    </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card p-3 mb-3">
+            <div class="d-flex align-items-center">
+                <div class="icon-bg bg-primary">
+                    <i class="fa-solid fa-list-check fa-2x"></i>
+                </div>
+                <div class="ms-3">
+                    <h5>Budgeted</h5>
+                    <h4 class="text-primary">${{budgeted}}</h4>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="col-md-3">
-            <div class="card p-3 mb-3">
-                <div class="d-flex align-items-center">
-                    <div class="icon-bg bg-danger">
-                        <i class="fa-solid fa-money-bill-wave fa-2x"></i>
-                    </div>
-                    <div class="ms-3">
-                        <h5>Spend</h5>
-                        <h4 class="text-danger">${{total_spend}}</h4>
-                    </div>
+    <div class="col-md-3">
+        <div class="card p-3 mb-3">
+            <div class="d-flex align-items-center">
+                <div class="icon-bg bg-danger">
+                    <i class="fa-solid fa-money-bill-wave fa-2x"></i>
+                </div>
+                <div class="ms-3">
+                    <h5>Spend</h5>
+                    <h4 class="text-danger">${{total_spend}}</h4>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="col-md-3">
-            <div class="card p-3 mb-3">
-                <div class="d-flex align-items-center">
-                    <div class="icon-bg bg-warning">
-                        <i class="fa-solid fa-wallet fa-2x"></i>
-                    </div>
-                    <div class="ms-3">
-                        <h5>Savings</h5>
-                        <h4 class="text-warning">${{balance}}</h4>
-                    </div>
+    <div class="col-md-3">
+        <div class="card p-3 mb-3">
+            <div class="d-flex align-items-center">
+                <div class="icon-bg bg-warning">
+                    <i class="fa-solid fa-wallet fa-2x"></i>
+                </div>
+                <div class="ms-3">
+                    <h5>Savings</h5>
+                    <h4 class="text-warning">${{balance}}</h4>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Recent Transactions -->
-        <div class="col-md-12 recent-transactions mt-3">
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>Allocations</h4>
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control me-2" placeholder="Search Allocations...">
-                </div>
-                <div class="col-md-4 text-end">
-                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newAllocationModal{{budget.id}}">
-                        New Allocation
-                    </button>
-                </div>
+    <!-- Recent Transactions -->
+    <div class="col-md-12 mt-3">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Allocations</h4>
             </div>
-            
-            <table class="table table-bordered mt-3">
-                <thead class="table-light">
+            <div class="col-md-4">
+                <input type="text" class="form-control me-2" placeholder="Search Allocations...">
+            </div>
+            <div class="col-md-4 text-end">
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newAllocationModal{{budget.id}}">
+                    New Allocation
+                </button>
+            </div>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-sm mt-3">
+                <thead class="">
                     <tr>
                         <th>#</th>
                         <th>Allocation Type</th>
@@ -102,23 +103,24 @@
                         {% include "budgets/allocations/edit_allocation.html" %}
                         {% include "budgets/allocations/delete_allocation.html" %}
                     </tr>
-                   {% endfor %}
+                    {% endfor %}
                 </tbody>
             </table>
-            <div>
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-end">
-                    {% if page_obj.has_previous %}   
-                      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
-                    {% endif %}
-                    <a class="page-link" href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
-                    {% if page_obj.has_next %}    
-                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-                    {% endif %}   
-                  </ul>
-                </nav>
-              </div>
         </div>
+        <div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                {% if page_obj.has_previous %}   
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                <a class="page-link" href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
+                {% if page_obj.has_next %}    
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}   
+                </ul>
+            </nav>
+            </div>
     </div>
+</div>
 
 {% endblock content %}
