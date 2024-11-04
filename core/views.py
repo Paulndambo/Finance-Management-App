@@ -47,3 +47,6 @@ def dashboard(request):
     }
 
     return render(request, "dashboard.html", context)
+
+def index(request):
+    return render(request, "dashboard1.html")

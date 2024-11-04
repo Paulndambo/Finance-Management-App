@@ -75,7 +75,7 @@ def budget_details(request, id):
     
     budget_categories = BudgetCategory.objects.all()
 
-    paginator = Paginator(allocations, 5)
+    paginator = Paginator(allocations, 7)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 

@@ -84,3 +84,14 @@ class Investment(AbstractBaseModel):
 
     def __str__(self):
         return f"{self.user.username} {self.investment_type}"
+
+
+class Saving(AbstractBaseModel):
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
+    month = models.CharField(max_length=255, choices=MONTH_NAMES)
+    year = models.IntegerField()
+    amount = models.DecimalField(max_digits=100, decimal_places=2, default=0)
+    saved_on = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        return f"{self.month} {self.year} {self.amount}"

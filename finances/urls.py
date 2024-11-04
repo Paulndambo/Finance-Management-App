@@ -18,6 +18,8 @@ from finances.views import (
     delete_expenditure,
 )
 
+from finances.savings.views import savings, new_saving, edit_saving, delete_saving
+
 urlpatterns = [
     path("income/", income, name="income"),
     path("new-income/", new_income, name="new-income"),
@@ -36,4 +38,9 @@ urlpatterns = [
     path("new-expenditure/", new_expenditure, name="new-expenditure"),
     path("edit-expenditure/", edit_expenditure, name="edit-expenditure"),
     path("delete-expenditure/", delete_expenditure, name="delete-expenditure"),
+    
+    path("savings/", savings, name="savings"),
+    path("new-savings/", new_saving, name="new-savings"),
+    path("edit-savings/", edit_saving, name="edit-savings"),
+    path("delete-savings/", delete_saving, name="delete-savings"),
 ]

@@ -105,7 +105,7 @@ def delete_income(request):
 def income_records(request, id):
     income = Income.objects.get(id=id)
     income_records = IncomeRecord.objects.filter(income=income).order_by("-created")
-    paginator = Paginator(income_records, 7)
+    paginator = Paginator(income_records, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
@@ -216,7 +216,7 @@ def delete_investment(request):
 @login_required(login_url="/users/login")
 def expenditures(request):
     expenditure = Expenditure.objects.filter(user=request.user).order_by("-created")
-    paginator = Paginator(expenditure, 7)
+    paginator = Paginator(expenditure, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     

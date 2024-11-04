@@ -54,7 +54,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
+    #"allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -207,3 +207,6 @@ MPESA_EXPRESS_SHORTCODE = "174379"
 MPESA_SHORTCODE_TYPE = "paybill"
 MPESA_PASSKEY = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
 
+CHIMMONEY_BASE_URL = "https://api-v2-sandbox.chimoney.io/v0.2"
+CHIMMONEY_API_KEY = "d34e9032b71432ecbeac88d5d120101aab96bdafec97d62ef8aa7c7e08536385"
+CHIMMONEY_PAYMENT_REQUEST_CALLBACK = "http://localhost:8000/integrations/payment-request-callback/"

@@ -1,71 +1,71 @@
-{% extends "base.html" %}
+{% extends "base1.html" %}
 
 {% block content %}
-<div class="container mt-3">
-    <div class="row">
-        <!-- Cards Section -->
-        <!-- Recent Transactions -->
-        <div class="col-md-12 recent-transactions mt-3">
-            <div class="row">
-                <div class="col-md-4">
-                    <h4>Monthly Income</h4>
-                </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control me-2" placeholder="Search Income...">
-                </div>
-                <div class="col-md-4 text-end">
-                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newIncomeModal">
-                        New Income Record
-                    </button>
-                </div>
+
+<div class="row">
+    <div class="col-md-12 mt-3">
+        <div class="row">
+            <div class="col-md-4">
+                <h4 class="px-2">Monthly Income</h4>
             </div>
-           
-            <table class="table table-bordered mt-3">
-                <thead class="table-light">
-                    <tr>
-                        <th>#</th>
-                        <th>Created On</th>
-                        <th>Month</th>
-                        <th>Total Income</th>
-                        <th colspan="3"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for income in page_obj %}
-                    <tr>
-                        <td>{{income.id}}</td>
-                        <td>{{income.created}}</td>
-                        <td>{{income.month}} {{income.year}}</td>
-                        <td>{{income.amount}}</td>
-                        <td>
-                            <a href="{% url 'income-records' income.id %}" class="btn btn-info btn-sm"><i class="fa-regular fa-eye"></i></a>
-                        </td>
-                        <td>
-                            <a data-bs-toggle="modal" data-bs-target="#editIncomeModal{{income.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
-                        </td>
-                        <td>
-                            <a data-bs-toggle="modal" data-bs-target="#deleteIncomeModal{{income.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
-                        </td>
-                        {% include "income/edit_income.html" %}
-                        {% include "income/delete_income.html" %}
-                    </tr>
-                   {% endfor %}
-                </tbody>
-            </table>
-            <div>
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-end">
-                    {% if page_obj.has_previous %}   
-                      <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
-                    {% endif %}
-                    <a class="page-link" href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
-                    {% if page_obj.has_next %}    
-                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
-                    {% endif %}   
-                  </ul>
-                </nav>
-              </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control me-2" placeholder="Search Income...">
+            </div>
+            <div class="col-md-4 text-end">
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#newIncomeModal">
+                    New Income Record
+                </button>
+            </div>
         </div>
+        
+        <div class="table-responsive">
+        <table class="table mt-3">
+            <thead class="">
+                <tr>
+                    <th>#</th>
+                    <th>Created On</th>
+                    <th>Month</th>
+                    <th>Total Income</th>
+                    <th colspan="3"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for income in page_obj %}
+                <tr>
+                    <td>{{income.id}}</td>
+                    <td>{{income.created}}</td>
+                    <td>{{income.month}} {{income.year}}</td>
+                    <td>{{income.amount}}</td>
+                    <td>
+                        <a href="{% url 'income-records' income.id %}" class="btn btn-info btn-sm"><i class="fa-regular fa-eye"></i></a>
+                    </td>
+                    <td>
+                        <a data-bs-toggle="modal" data-bs-target="#editIncomeModal{{income.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
+                    </td>
+                    <td>
+                        <a data-bs-toggle="modal" data-bs-target="#deleteIncomeModal{{income.id}}" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                    </td>
+                    {% include "income/edit_income.html" %}
+                    {% include "income/delete_income.html" %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        <div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                {% if page_obj.has_previous %}   
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                <a class="page-link" href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a>
+                {% if page_obj.has_next %}    
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% endif %}   
+                </ul>
+            </nav>
+            </div>
     </div>
 </div>
+
 {% endblock content %}

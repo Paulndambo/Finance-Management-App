@@ -1,13 +1,13 @@
-{% extends "base.html" %}
+{% extends "base1.html" %}
 
 {% block content %}
-<div class="container mt-3" style="height: 100vh;">
+
     <div class="row">
         <!-- Recent Transactions -->
-        <div class="col-md-12 recent-transactions mt-2">
+        <div class="col-md-12">
             <div class="row">
                 <div class="col-md-4">
-                    <h4>Expenditures</h4>
+                    <h4 class="px-2">Expenditures</h4>
                 </div>
                 <div class="col-md-4">
                     <input type="text" class="form-control me-2" placeholder="Search Expenditures...">
@@ -19,7 +19,7 @@
                 </div>
             </div>
             
-            <table class="table table-bordered mt-3">
+            <table class="table table-sm mt-3">
                 <thead class="table-light">
                     <tr>
                         <th scope="">#</th>
@@ -63,5 +63,5 @@
               </div>
         </div>
     </div>
-</div>
+
 {% endblock content %}

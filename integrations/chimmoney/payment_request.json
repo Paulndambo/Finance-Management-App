@@ -1,0 +1,95 @@
+{
+    "status": "success",
+    "data": {
+      "id": "i7CsjB99UgUBv8dlSmdB",
+      "valueInUSD": 100,
+      "payerEmail": "paulndambo1198@gmail.com",
+      "redirect_url": "http://127.0.0.1:8000/integrations/chi-pr-callback/",
+      "meta": {},
+      "redeemData": {
+        "walletID": "ACuyZ661l0IWdz6FJcXZ"
+      },
+      "type": "api-payment",
+      "issuer": "KS5YtYhhkgWhdYpdjsNlDQdf9G83",
+      "chimoney": 100000,
+      "issueID": "KS5YtYhhkgWhdYpdjsNlDQdf9G83_100_1729689843574",
+      "initiatedBy": "KS5YtYhhkgWhdYpdjsNlDQdf9G83",
+      "integration": {
+        "appID": "alBx0M5fxjgYwiIA1bj8",
+        "isFromScrim": false
+      },
+      "turnOffNotification": false,
+      "narration": "",
+      "chiRef": "274cbeb7-f426-43bd-8117-1d7bfcdab270",
+      "issueDate": "2024-10-23T13:24:03.882Z",
+      "t_id": 745769,
+      "status": "unpaid",
+      "fee": 0,
+      "cryptoPayment": {
+        "xrpl": {
+          "acceptedTokens": [
+            "XRP"
+          ],
+          "address": "rfzysZAt1d6NQdj3baRiWb7UjQoEfgU8Sk",
+          "paymentAmount": {
+            "USD": {
+              "value": 105,
+              "currency": "USD"
+            },
+            "XRP": {
+              "value": "201435979",
+              "currency": "XRP",
+              "comment": "value is in Drops"
+            }
+          },
+          "transactionMemo": [
+            {
+              "Memo": {
+                "MemoData": "5468697320697320612068747470733A2F2F6368696D6F6E65792E696F207061796D656E74"
+              }
+            },
+            {
+              "Memo": {
+                "MemoData": "7B2269737375654944223A224B533559745968686B675768645970646A734E6C44516466394738335F3130305F31373239363839383433353734227D"
+              }
+            }
+          ],
+          "paymentInstruction": "Include the transaction Memo (response.xrpl.transactionMemo) to the XRPL Transaction Memos field.",
+          "xummPayloads": {}
+        },
+        "eth": {
+          "acceptedTokens": [
+            "USDC",
+            "USDT",
+            "flexUSD",
+            "BUSD",
+            "DAI"
+          ],
+          "address": "0xc120f8773883079bd0A66Ef3d95fc199d48bc4c4",
+          "paymentAmount": {
+            "USD": {
+              "value": 105,
+              "currency": "USD"
+            }
+          }
+        },
+        "bsc": {
+          "acceptedTokens": [
+            "BUSD",
+            "BUSD",
+            "USDT"
+          ],
+          "address": "0xc120f8773883079bd0A66Ef3d95fc199d48bc4c4",
+          "paymentAmount": {
+            "USD": {
+              "value": 105,
+              "currency": "USD"
+            }
+          }
+        },
+        "xummPayment": ""
+      },
+      "paymentRef": "KS5YtYhhkgWhdYpdjsNlDQdf9G83_100_1729689843574",
+      "paymentLink": "https://sandbox.chimoney.io/pay/?issueID=KS5YtYhhkgWhdYpdjsNlDQdf9G83_100_1729689843574"
+    }
+  }
