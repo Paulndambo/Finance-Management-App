@@ -160,7 +160,7 @@ REST_FRAMEWORK = {
 }
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://personal-finance-backend-33b0.onrender.com",
+    "https://finance-management-app-s8ys.onrender.com",
     "https://sunny-morally-lacewing.ngrok-free.app"
 ]
 
