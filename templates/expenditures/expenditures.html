@@ -26,6 +26,7 @@
                         <th scope="">Description</th>
                         <th scope="">Budget Allocation</th>
                         <th scope="">Amount</th>
+                        <th scope="">Added On</th>
                         <th colspan="2"></th>
                     </tr>
                 </thead>
@@ -36,6 +37,7 @@
                         <td>{{expenditure.description}}</td>
                         <td>{{expenditure.allocation}}</td>
                         <td>{{expenditure.amount}}</td>
+                        <td>{{expenditure.created}}</td>
                         <td>
                             <a data-bs-toggle="modal" data-bs-target="#editExpenditureModal{{expenditure.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
                         </td>
