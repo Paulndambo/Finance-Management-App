@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 250px;
+        }
+        
+        #sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: #2c3e50;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        #sidebar.collapsed {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+        
+        #main-content {
+            margin-left: var(--sidebar-width);
+            transition: all 0.3s;
+            min-height: 100vh;
+        }
+        
+        #main-content.expanded {
+            margin-left: 0;
+        }
+        
+        .sidebar-link {
+            color: #ecf0f1;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-link:hover {
+            background: #34495e;
+            color: #fff;
+        }
+        
+        .sidebar-link i {
+            width: 20px;
+            text-align: center;
+            margin-right: 10px;
+        }
+        
+        .card-stat {
+            border-left: 4px solid;
+            transition: transform 0.3s;
+        }
+        
+        .card-stat:hover {
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: calc(-1 * var(--sidebar-width));
+            }
+            
+            #sidebar.active {
+                margin-left: 0;
+            }
+            
+            #main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="p-4">
+                <h3 class="text-white mb-4">Admin Panel</h3>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="#" class="sidebar-link">
+                            <i class="fas fa-chart-line"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link">
+                            <i class="fas fa-users"></i> Customers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link">
+                            <i class="fas fa-box"></i> Products
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link">
+                            <i class="fas fa-calendar-alt"></i> Events
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link">
+                            <i class="fas fa-shopping-cart"></i> Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link">
+                            <i class="fas fa-credit-card"></i> Payments
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="sidebar-link">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div id="main-content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button id="sidebarToggle" class="btn btn-outline-secondary">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="ms-auto">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                <i class="fas fa-user"></i> Admin
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid p-4">
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="card card-stat border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Sales</h5>
+                                <h2>$24,500</h2>
+                                <p class="mb-0 text-success"><i class="fas fa-arrow-up"></i> 12.5%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card card-stat border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">Products</h5>
+                                <h2>150</h2>
+                                <p class="mb-0 text-success"><i class="fas fa-arrow-up"></i> 8.2%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card card-stat border-info">
+                            <div class="card-body">
+                                <h5 class="card-title">Customers</h5>
+                                <h2>1,250</h2>
+                                <p class="mb-0 text-success"><i class="fas fa-arrow-up"></i> 15.7%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card card-stat border-warning">
+                            <div class="card-body">
+                                <h5 class="card-title">Events</h5>
+                                <h2>25</h2>
+                                <p class="mb-0 text-danger"><i class="fas fa-arrow-down"></i> 3.4%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Recent Orders</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Customer</th>
+                                                <th>Product</th>
+                                                <th>Amount</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>#12345</td>
+                                                <td>John Doe</td>
+                                                <td>Product A</td>
+                                                <td>$120</td>
+                                                <td><span class="badge bg-success">Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>#12346</td>
+                                                <td>Jane Smith</td>
+                                                <td>Product B</td>
+                                                <td>$85</td>
+                                                <td><span class="badge bg-warning">Pending</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>#12347</td>
+                                                <td>Mike Johnson</td>
+                                                <td>Product C</td>
+                                                <td>$200</td>
+                                                <td><span class="badge bg-info">Processing</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Upcoming Events</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Summer Sale</h6>
+                                            <small>3 days</small>
+                                        </div>
+                                        <p class="mb-1">Big discount on all products</p>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Product Launch</h6>
+                                            <small>1 week</small>
+                                        </div>
+                                        <p class="mb-1">New product line release</p>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Workshop</h6>
+                                            <small>2 weeks</small>
+                                        </div>
+                                        <p class="mb-1">Customer engagement workshop</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+            document.getElementById('main-content').classList.toggle('expanded');
+        });
+
+        // Handle responsive behavior
+        function checkWidth() {
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.add('collapsed');
+                document.getElementById('main-content').classList.add('expanded');
+            } else {
+                document.getElementById('sidebar').classList.remove('collapsed');
+                document.getElementById('main-content').classList.remove('expanded');
+            }
+        }
+
+        // Check on load and resize
+        window.addEventListener('load', checkWidth);
+        window.addEventListener('resize', checkWidth);
+    </script>
+</body>
+</html>

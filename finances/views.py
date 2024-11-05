@@ -220,7 +220,7 @@ def expenditures(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     
-    allocations = BudgetAllocation.objects.filter(user=request.user)
+    allocations = BudgetAllocation.objects.filter(user=request.user).filter(budget__active=True)
 
     context = {
         "page_obj": page_obj,
