@@ -1,0 +1,41 @@
+<div class="modal fade" id="editInvoiceItemModal{{item.id}}" tabindex="-1" aria-labelledby="newTransactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newTransactionModalLabel">Edit Invoice Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'edit-invoice-item' %}">
+                    {% csrf_token %}
+                    <input type="number" id="invoice_item_id" name="invoice_item_id" value="{{item.id}}" hidden readonly required />
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Item Name</label>
+                            <input type="text" id="description" name="description" required class="form-control" value="{{item.description}}" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Quantity</label>
+                            <input type="number" id="quantity" name="quantity" required class="form-control" value="{{item.quantity}}" />
+                        </div>
+                        
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="transactionDescription" class="form-label fw-bold">Rate</label>
+                            <input type="number" id="rate" name="rate" required class="form-control" value="{{item.rate}}" />
+                        </div>
+                    </div>
+                   
+                    <div class="text-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit Item</button>
+                    </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+  </div>

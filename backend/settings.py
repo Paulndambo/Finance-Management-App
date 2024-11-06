@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "invoices",
     "integrations",
     "lipia",
+    "shop",
 ]
 
 MIDDLEWARE = [

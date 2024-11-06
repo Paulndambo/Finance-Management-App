@@ -1,18 +1,12 @@
 {% extends "base1.html" %}
 
 {% block content %}
-<div class="invoice-header text-center">
-    <h1>Invoice</h1>
-    <p>{{request.user.name}}</p>
-    <p>{{request.user.address}}, {{request.user.city}}, {{request.user.country}}</p>
-    <p>Email: {{request.user.email}} | Phone: {{request.user.phone_number}}</p>
-  </div>
-
   <!-- Invoice and Client Details -->
+   <div class="px-3">
   <div class="row invoice-details">
     <div class="col-sm-6">
-      <h5>Invoice To:</h5>
-      <p><strong>{{invoice.client_name}}</strong></p>
+      <h5>Bill To:</h5>
+      <p>{{invoice.client_name}}</p>
       <p>{{invoice.client_address}}</p>
       <p>Email: {{invoice.client_email}}</p>
       <p>Phone: {{invoice.client_phone}}</p>
@@ -26,7 +20,11 @@
   </div>
 
   <!-- Table of Items/Services -->
-  <table class="table">
+   <div class="text-end">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newInvoiceItemModal{{invoice.id}}">Add Item</button>
+   </div>
+  {% include "invoices/new_invoice_item.html" %}
+  <table class="table table-sm">
     <thead class="">
       <tr>
         <th>#</th>
@@ -34,55 +32,111 @@
         <th>Quantity</th>
         <th>Unit Price</th>
         <th>Total</th>
+        <th colspan="2"></th>
       </tr>
     </thead>
     <tbody>
+      {% for item in invoice_items %}
       <tr>
-        <td>1</td>
-        <td>Service/Product 1</td>
-        <td>2</td>
-        <td>$50.00</td>
-        <td>$100.00</td>
+        <td>{{item.id}}</td>
+        <td>{{item.description}}</td>
+        <td>{{item.quantity}}</td>
+        <td>{{item.rate}}</td>
+        <td>{{item.amount}}</td>
+        <td>
+          <a data-bs-toggle="modal" data-bs-target="#editInvoiceItemModal{{item.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
+      </td>
+        <td><a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteInvoiceItemModal{{item.id}}"><i class="bi bi-trash"></i></a></td>
+        {% include "invoices/delete_invoice_item.html" %}
+        {% include "invoices/edit_invoice_item.html" %}
       </tr>
-      <tr>
-        <td>2</td>
-        <td>Service/Product 2</td>
-        <td>1</td>
-        <td>$75.00</td>
-        <td>$75.00</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Service/Product 3</td>
-        <td>5</td>
-        <td>$20.00</td>
-        <td>$100.00</td>
-      </tr>
-      <!-- Total row -->
-      <tr class="total-row">
-        <td colspan="4" class="text-end">Subtotal</td>
-        <td>$275.00</td>
-      </tr>
-      <tr class="total-row">
-        <td colspan="4" class="text-end">Tax (10%)</td>
-        <td>$27.50</td>
-      </tr>
-      <tr class="total-row">
-        <td colspan="4" class="text-end">Total</td>
-        <td>$302.50</td>
-      </tr>
+      {% endfor %}
+
     </tbody>
   </table>
+  <div class="row justify-content-end total-section">
+    <div class="col-md-6">
+      {% if payment_details_found %}
+      <p><strong>Payment Details:</strong></p>
+      {% if invoice.payment_method == "Bank Transfer" %}
+        <p><b>Bank:</b> {{payment_details.bank_name}}</p>
+        <p><b>Acc. Name:</b> {{payment_details.account_name}}</p>
+        <p><b>Acc. Number:</b> {{payment_details.account_number}}</p>
+        <p><b>Swift Code:</b> {{payment_details.swift_code}}</p>
+        <p><b>Routing Number:</b> {{payment_details.routing_number}}</p>
+      {% elif invoice.payment_method == "Mobile Money" %}
+        <p><b>Provider:</b> {{payment_details.mobile_money_provider}}</p>
+        <p><b>Acc. Name:</b> {{payment_details.mobile_money_name}}</p>
+        <p><b>Phone Number:</b> {{payment_details.mobile_money_number}}</p>
+      {% elif invoice.payment_method == "PayPal" %}
+        <p><b>PayPal Name:</b> {{payment_details.paypal_name}}</p>
+        <p><b>Email:</b> {{payment_details.paypal_email}}</p>
 
-  <!-- Payment Information -->
-  <div class="row">
-    <div class="col-sm-6">
-      <p><strong>Payment Methods:</strong></p>
-      <p>Bank Transfer: Account Number - 12345678</p>
-      <p>PayPal: paypal@company.com</p>
+      {% elif invoice.payment_method == "Payment Link" %}
+        {% if invoice.payment_link %}
+        <p><b>Payer Name: </b>{{payment_details.payer_name}}</p>
+        <p><b>Payer Email: </b>{{payment_details.payer_email}}</p>
+        <p><b>Payer Phone: </b>{{payment_details.payer_phone}}</p>
+        <p><strong>Payment Link:</strong> <a href="{{invoice.payment_link}}" target="_blank">{{invoice.payment_link}}</a></p>
+        {% else %}
+        <p><b>Payer Name: </b>{{payment_details.payer_name}}</p>
+        <p><b>Payer Email: </b>{{payment_details.payer_email}}</p>
+        <p><b>Payer Phone: </b>{{payment_details.payer_phone}}</p>
+        <a href="#" class="btn btn-primary">Generate Payment Link</a>
+        {% endif %}
+      {% endif %}
+      {% else %}
+      <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPaymentDetailsModal{{invoice.id}}">Add Payment Details</a>
+      {% endif %}
     </div>
-    <div class="col-sm-6 text-end">
-      <p><strong>Thank you for your business!</strong></p>
+    <div class="col-md-6">
+        <table class="table table-borderless">
+            <tr>
+                <td class="text-end"><strong>Subtotal:</strong></td>
+                <td class="text-end" id="subtotal">${{invoice.invoice_amount}}</td>
+            </tr>
+            <tr>
+                <td class="text-end"><strong>Tax (10%):</strong></td>
+                <td class="text-end" id="tax">$0.00</td>
+            </tr>
+            <tr class="table-active">
+                <td class="text-end"><strong>Total:</strong></td>
+                <td class="text-end"><strong id="total">${{invoice.invoice_amount}}</strong></td>
+            </tr>
+        </table>
     </div>
-  </div>
+</div>
+{% include "invoices/payment_details.html" %}
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript to toggle fields based on payment method
+        document.getElementById('payment_method').addEventListener('change', function() {
+            const bankFields = document.getElementById('bankFields');
+            const paypalFields = document.getElementById('paypalFields');
+            const mobileMoneyFields = document.getElementById('mobileMoneyFields');
+            const paymentLinkFields = document.getElementById('paymentLinkFields');
+
+            // Hide all fields initially
+            bankFields.classList.add('d-none');
+            paypalFields.classList.add('d-none');
+            mobileMoneyFields.classList.add('d-none');
+            paymentLinkFields.classList.add('d-none');
+
+            // Show fields based on the selected payment method
+            const selectedMethod = this.value;
+            if (selectedMethod === 'Bank Transfer') {
+                bankFields.classList.remove('d-none');
+            } else if (selectedMethod === 'PayPal') {
+                paypalFields.classList.remove('d-none');
+            } else if (selectedMethod === 'Mobile Money') {
+                mobileMoneyFields.classList.remove('d-none');
+            } else if (selectedMethod === 'Payment Link') {
+                paymentLinkFields.classList.remove('d-none');
+            }
+        });
+    </script>
+
 {% endblock content %}
+

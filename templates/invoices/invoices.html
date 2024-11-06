@@ -25,12 +25,12 @@
                     <thead class="">
                         <tr>
                             <th>#</th>
-                            <th>Client</th>
+                            <th>Client Name</th>
                             <th>Number</th>
                             <th>Amount</th>
                             <th>Date Due</th>
                             <th>Status</th>
-                            <th colspan="3"></th>
+                            <th colspan="5"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,6 +44,12 @@
                             <td>{{invoice.status}}</td>
                             <td>
                                 <a href="{% url 'invoice-details' invoice.id %}" class="btn btn-info btn-sm"><i class="fa-regular fa-eye"></i></a>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-warning btn-sm"><i class="fas fa-envelope"></i></a>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-success btn-sm share-icon" data-link="{{ invoice.invoice_link }}" onclick="copyLink(this)"><i class="fas fa-share-alt"></i></a>
                             </td>
                             <td>
                                 <a data-bs-toggle="modal" data-bs-target="#editInvoiceModal{{invoice.id}}" class="btn btn-primary btn-sm"><i class="bi bi-pencil-square"></i></a>
@@ -73,5 +79,35 @@
               </div>
         </div>
     </div>
-
+    <!-- Toast Container -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="copyToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          Invoice link copied to clipboard!
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function copyLink(element) {
+          // Get the link from the data-link attribute
+          const link = element.getAttribute("data-link");
+      
+          // Use the Clipboard API to copy the link to the clipboard
+          navigator.clipboard.writeText(link).then(() => {
+            // Show the Bootstrap toast
+            const toastElement = document.getElementById("copyToast");
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+          }).catch(err => {
+            // Handle errors if any
+            console.error("Failed to copy: ", err);
+            alert("Failed to copy the link. Please try again.");
+          });
+        }
+      </script>
 {% endblock content %}

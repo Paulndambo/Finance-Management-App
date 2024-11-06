@@ -38,4 +38,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path("lipia/", include("lipia.urls")),
     path("integrations/", include("integrations.urls")),
+    path("shop/", include("shop.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

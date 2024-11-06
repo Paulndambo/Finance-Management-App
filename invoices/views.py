@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
-from invoices.models import Invoice, InvoiceItem
+from invoices.models import Invoice, InvoiceItem, InvoicePaymentDetails
 
 INVOICE_STATUSES = ["Pending", "Paid",  "Cancelled", "Declined", "Defaulted"]
 # Create your views here.
@@ -36,9 +36,17 @@ def invoice_details(request, id):
     invoice = Invoice.objects.get(id=id)
     invoice_items = InvoiceItem.objects.filter(invoice=invoice)
     
+    payment_details_found = False
+    payment_details = InvoicePaymentDetails.objects.filter(invoice=invoice).first()
+    
+    if payment_details:
+        payment_details_found = True
+        
     context = {
         "invoice": invoice,
-        "invoice_items": invoice_items
+        "invoice_items": invoice_items,
+        "payment_details": payment_details,
+        "payment_details_found": payment_details_found
     }
     
     return render(request, "invoices/invoice_details.html", context)
@@ -96,3 +104,72 @@ def delete_invoice(request):
         invoice.delete()
         return redirect("invoices")
     return render(request, "invoices/delete_invoice.html")
+
+
+
+def new_invoice_item(request):
+    if request.method == "POST":
+        invoice = Invoice.objects.get(id=request.POST.get("invoice_id"))
+        item = InvoiceItem.objects.create(
+            invoice=invoice,
+            description=request.POST.get("description"),
+            quantity=request.POST.get("quantity"),
+            rate=request.POST.get("rate"),
+        )
+        item.amount = Decimal(item.quantity) * Decimal(item.rate)
+        item.save()
+        
+        return redirect(f"/invoices/{invoice.id}/details")
+    return render(request, "invoices/new_invoice_item.html")
+
+
+def edit_invoice_item(request):
+    if request.method == "POST":
+        item = InvoiceItem.objects.get(id=request.POST.get("invoice_item_id"))
+        item.description = request.POST.get("description")
+        item.quantity = request.POST.get("quantity")
+        item.rate = request.POST.get("rate")
+        item.amount = Decimal(item.quantity) * Decimal(item.rate)
+        item.save()
+        return redirect(f"/invoices/{item.invoice.id}/details")
+    return render(request, "invoices/edit_invoice_item.html")
+
+
+def delete_invoice_item(request):
+    if request.method == "POST":
+        item = InvoiceItem.objects.get(id=request.POST.get("invoice_item_id"))
+        item.delete()
+        return redirect(f"/invoices/{item.invoice.id}/details")
+    return render(request, "invoices/delete_invoice_item.html")
+
+
+@login_required(login_url="/users/login")
+def add_payment_details(request):
+    if request.method == "POST":
+        invoice = Invoice.objects.get(id=request.POST.get("invoice_id"))
+        payment_details = InvoicePaymentDetails.objects.create(invoice=invoice, user=request.user)
+        payment_details.payment_method = request.POST.get("payment_method")
+        
+        payment_details.bank_name = request.POST.get("bank_name")
+        payment_details.account_name = request.POST.get("account_name")
+        payment_details.account_number = request.POST.get("account_number")
+        payment_details.swift_code = request.POST.get("swift_code")
+        payment_details.routing_number = request.POST.get("routing_number")
+
+        payment_details.mobile_money_provider = request.POST.get("mobile_money_provider")
+        payment_details.mobile_money_code = request.POST.get("mobile_money_code")
+        payment_details.mobile_money_number = request.POST.get("mobile_money_number")
+        payment_details.mobile_money_name = request.POST.get("mobile_money_name")
+
+        payment_details.paypal_email = request.POST.get("paypal_email")
+        payment_details.paypal_name = request.POST.get("paypal_name")
+        
+        payment_details.payer_name = request.POST.get("payer_name")
+        payment_details.payer_email = request.POST.get("payer_email")
+        payment_details.payer_phone_number = request.POST.get("payer_phone_number")
+        
+        payment_details.save()
+        payment_details.invoice.payment_method = payment_details.payment_method
+        payment_details.invoice.save()
+        return redirect(f"/invoices/{invoice.id}/details")
+    return render(request, "invoices/payment_details.html")

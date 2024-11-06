@@ -38,9 +38,8 @@
     </div>
 
     <a href="{% url 'loans' %}" class="nav-link"><i class="fas fa-hand-holding-usd"></i> Loans</a>
-    <!--
-    <a href="{% url 'invoices' %}" class="nav-link"><i class="fas fa-file-invoice"></i> Invoices</a>
-    -->
+    
+    
     <a href="#paymentsSubmenu" class="nav-link" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fas fa-wallet"></i> Payments
     </a>
@@ -48,10 +47,11 @@
         <ul class="list-unstyled ps-3">
             <li><a href="{% url 'payment-requests' %}" class="nav-link"><i class="fas fa-handshake"></i> Requests</a></li>
             <li><a href="#" class="nav-link"><i class="fas fa-hand-holding-usd"></i> Payouts</a></li>
+            <a href="{% url 'invoices' %}" class="nav-link"><i class="fas fa-file-invoice"></i> Invoices</a>
         </ul>
     </div>
 
-    <a href="#" class="nav-link"><i class="fas fa-store"></i> Shop</a>
+    <a href="{% url 'shop-home' %}" class="nav-link"><i class="fas fa-store"></i> Shop</a>
 
     <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-user"></i> Logout</a>
 </div>

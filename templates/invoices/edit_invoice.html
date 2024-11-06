@@ -34,11 +34,11 @@
                     <div class="row mb-3">
                       <div class="col">
                           <label for="transactionDescription" class="form-label fw-bold">Invoice Date</label>
-                          <input type="date" id="invoice_date" name="invoice_date" value="{{invoice.invoice_date}}" class="form-control" />
+                          <input type="date" id="invoice_date" name="invoice_date" value="{{invoice.invoice_date| date:'Y-m-d'}}" class="form-control" />
                       </div>
                       <div class="col">
                           <label for="transactionDescription" class="form-label fw-bold">Due Date</label>
-                          <input type="date" id="due_date" name="due_date" value="{{invoice.due_date}}" class="form-control" />
+                          <input type="date" id="due_date" name="due_date" value="{{invoice.due_date| date:'Y-m-d'}}" class="form-control" />
                       </div>
                   </div>
                   <div class="row mb-3">

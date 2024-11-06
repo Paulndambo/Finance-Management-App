@@ -1,0 +1,111 @@
+<div class="modal fade" id="addPaymentDetailsModal{{invoice.id}}" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Payment Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'add-payment-details' %}">
+                    {% csrf_token %}
+                    <input type="number" id="invoice_id" name="invoice_id" value="{{invoice.id}}" hidden readonly required />
+                    <!-- Payment Method Selection -->
+                    <div class="mb-3">
+                        <label for="paymentMethod" class="form-label fw-bold">Payment Method</label>
+                        <select class="form-select" id="payment_method" name="payment_method" required>
+                            <option value="">Select Payment Method</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                            <option value="PayPal">PayPal</option>
+                            <option value="Mobile Money">Mobile Money</option>
+                            <option value="Payment Link">Payment Link</option>
+                        </select>
+                    </div>
+
+                    <!-- Bank Transfer Fields -->
+                    <div id="bankFields" class="d-none">
+                        <div class="mb-3">
+                            <label for="bankName" class="form-label fw-bold">Bank Name</label>
+                            <input type="text" class="form-control" id="bank_name" name="bank_name" placeholder="Enter Bank Name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="accountName" class="form-label fw-bold">Account Name</label>
+                            <input type="text" class="form-control" id="account_name" name="account_name" placeholder="Enter Account Name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="accountNumber" class="form-label fw-bold">Account Number</label>
+                            <input type="text" class="form-control" id="account_number" name="account_number" placeholder="Enter Account Number">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="swiftCode" class="form-label fw-bold">Swift Code</label>
+                            <input type="text" class="form-control" id="swift_code" name="swift_code" placeholder="Enter Swift Code">
+                            </div>
+                            <div class="col">
+                                <label for="bankName" class="form-label fw-bold">Routing Number</label>
+                            <input type="text" class="form-control" id="routing_number" name="routing_number" placeholder="Enter Routing Number">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PayPal Fields -->
+                    <div id="paypalFields" class="d-none">
+                        <div class="mb-3">
+                            <label for="paypalName" class="form-label fw-bold">PayPal Name</label>
+                            <input type="text" class="form-control" id="paypal_name" name="paypal_name" placeholder="Enter PayPal Name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="paypalEmail" class="form-label fw-bold">PayPal Email</label>
+                            <input type="email" class="form-control" id="paypal_email" name="paypal_email" placeholder="Enter PayPal Email">
+                        </div>
+                    </div>
+
+                    <!-- Mobile Money Fields -->
+                    <div id="mobileMoneyFields" class="d-none">
+                        <div class="mb-3">
+                            <label for="mobileOperator" class="form-label fw-bold">Mobile Operator</label>
+                            <input type="text" class="form-control" id="mobile_money_provider" name="mobile_money_provider" placeholder="Enter Mobile Operator">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mobileOperator" class="form-label fw-bold">Mobile Acc. Name</label>
+                            <input type="text" class="form-control" id="mobile_money_name" name="mobile_money_name" placeholder="Enter Mobile Name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="mobileNumber" class="form-label fw-bold">Mobile Number</label>
+                            <input type="text" class="form-control" id="mobile_money_number" name="mobile_money_number" placeholder="Enter Mobile Number">
+                        </div>
+                    </div>
+
+                    <!-- Payment Link Fields -->
+                    <div id="paymentLinkFields" class="d-none">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="transactionDescription" class="form-label fw-bold">Payer Name</label>
+                                <input type="text" class="form-control" name="payer_name" id="payer_name">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="transactionDescription" class="form-label fw-bold">Phone Number</label>
+                                <input type="text" class="form-control" name="payer_phone_number" id="payer_phone_number">
+                            </div>
+                           
+                        </div>
+                        <div class="row mb-3">
+                    
+                            <div class="col">
+                                <label for="transactionDescription" class="form-label fw-bold">Email</label>
+                                <input type="email" class="form-control" name="payer_email" id="payer_email">
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit Payment Details</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
